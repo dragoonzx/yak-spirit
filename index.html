@@ -2,9 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="src/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="src/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite React TypeScript Tailwind Starter</title>
+    <title>Yak Spirit | Yield Yak DEX aggregator</title>
+    <!-- web3 setup (for Vitejs react project only) -->
+    <script>window.global = window; // https://github.com/vitejs/vite/issues/3817#issuecomment-864450199</script>
+    <script type="module">
+      import process from "process";
+      import { Buffer } from "buffer";
+      import EventEmitter from "events";
+      window.Buffer = Buffer;
+      window.process = process;
+      window.EventEmitter = EventEmitter;
+    </script>
   </head>
   <body>
     <div id="root"></div>
