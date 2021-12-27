@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -11,7 +13,12 @@ export default defineConfig({
       stream: 'stream-browserify',
       zlib: 'browserify-zlib',
       util: 'util',
+      http: 'http-browserify',
+      https: 'https-browserify',
     },
+  },
+  test: {
+    global: true,
   },
   build: {
     chunkSizeWarningLimit: 4000,

@@ -16,26 +16,25 @@ const switchNetworkAvalanche = async () => {
     // @ts-expect-error: request on string
     await web3.currentProvider!.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x13881' }],
+      params: [{ chainId: '0xa86a' }],
     });
   } catch (error: any) {
     if (error.code === 4902) {
-      console.log('in error');
       try {
         // @ts-expect-error: request on string
         await web3.currentProvider!.request({
           method: 'wallet_addEthereumChain',
           params: [
             {
-              chainId: '0x13881',
-              chainName: 'Mumbai',
-              rpcUrls: ['https://rpc-mumbai.matic.today'],
+              chainId: '0xa86a',
+              chainName: 'Avalanche Mainnet',
+              rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
               nativeCurrency: {
-                name: 'Matic',
-                symbol: 'Matic',
+                name: 'AVAX',
+                symbol: 'AVAX',
                 decimals: 18,
               },
-              blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com'],
+              blockExplorerUrls: ['https://snowtrace.io/'],
             },
           ],
         });

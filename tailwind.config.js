@@ -7,6 +7,8 @@ module.exports = {
   },
   theme: {
     minWidth: {
+      20: '2.5rem',
+      30: '5rem',
       40: '10rem',
       60: '15rem',
       80: '20rem',
@@ -21,6 +23,20 @@ module.exports = {
   variants: {},
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['forest'],
+    themes: [
+      'forest',
+      'dark',
+      'light',
+      'bumblebee',
+      'emerald',
+      'synthwave',
+      'retro',
+      'valentine',
+      'lofi',
+      'pastel',
+      'wireframe',
+      'luxury',
+      'dracula',
+    ],
   },
 };
