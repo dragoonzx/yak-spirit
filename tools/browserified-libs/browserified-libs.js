@@ -2518,6 +2518,20 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 }
 
 },{}],5:[function(require,module,exports){
+const process = require('process/');
+const { Buffer } = require('buffer');
+const EventEmitter = require('events');
+if (window) {
+  const isLocalhost = window.location.host.indexOf('localhost') >= 0;
+  if (!isLocalhost) {
+    window.Buffer = Buffer;
+    window.process = process;
+    window.EventEmitter = EventEmitter;
+  }
+}
+module.exports = { browser: true };
+
+},{"buffer":2,"events":3,"process/":6}],6:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -2703,18 +2717,4 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],6:[function(require,module,exports){
-const process = require('process/');
-const { Buffer } = require('buffer');
-const EventEmitter = require('events');
-if (window) {
-  const isLocalhost = window.location.host.indexOf('localhost') >= 0;
-  if (!isLocalhost) {
-    window.Buffer = Buffer;
-    window.process = process;
-    window.EventEmitter = EventEmitter;
-  }
-}
-module.exports = { browser: true };
-
-},{"buffer":2,"events":3,"process/":5}]},{},[6]);
+},{}]},{},[5]);

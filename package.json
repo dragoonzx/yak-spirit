@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
+    "@rollup/plugin-commonjs": "^21.0.1",
     "bignumber.js": "^9.0.2",
     "classnames": "^2.3.1",
     "daisyui": "^1.14.1",
