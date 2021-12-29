@@ -61,7 +61,10 @@ const AppSettings = () => {
           <div className="collapse-title font-medium">Info</div>
           <div className="collapse-content">
             <p>
-              <span className="badge">Yak Spirit</span> offers best experience of YY Swap usage
+              <span className="badge">Yak Spirit</span> offers new experience of YY Swap usage. Learn more on{' '}
+              <a className="link link-primary" href="github.com/dragoonzx/yak-spirit" target="_blank">
+                github
+              </a>
             </p>
           </div>
         </div>

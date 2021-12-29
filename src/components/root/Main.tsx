@@ -3,7 +3,7 @@ import Header from '~/components/domain/header/Header';
 import { NetworkAlert } from '../domain/network-alert/NetworkAlert';
 import Footer from '../domain/footer/Footer';
 // import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 
 function Main() {
   return (

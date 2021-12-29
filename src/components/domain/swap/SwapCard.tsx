@@ -2,9 +2,9 @@ import { state, useSnapshot, useUserBalance } from '~/state';
 import SwapSelect from './SwapSelect';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import SwapSettings from './SwapSettings';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Web3 from 'web3';
-import { useMoralis } from 'react-moralis';
+import { useMoralis, useMoralisCloudFunction } from 'react-moralis';
 import classNames from 'classnames';
 import { fetchOnchainPrices } from './fetchPrices';
 import { toBaseUnit } from '~/utils/toBaseUnit';
@@ -15,6 +15,8 @@ import { useDebounce } from 'react-use';
 import SpiritLoader from '~/components/shared/SpiritLoader';
 import { swap } from './swap';
 import { IYakOffer } from '~/types/yak';
+import { WAVAX } from '~/utils/constants';
+import { formatTokenBalance } from '~/utils/formatters';
 
 const customGhostBtnStyle = {
   paddingLeft: '6px',
@@ -28,7 +30,7 @@ const YIELD_YAK_PLATFORM = 'Yield Yak';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 const getUsdPrices = async (tokenInAddress: string, tokenOutAddress: string) => {
-  const addresses = `${tokenInAddress},${tokenOutAddress}`;
+  const addresses = `${tokenInAddress},${tokenOutAddress},${WAVAX.toLowerCase()}`;
   const res = await fetch(
     `https://api.coingecko.com/api/v3/simple/token_price/avalanche?contract_addresses=${addresses}&vs_currencies=usd`
   );
@@ -39,20 +41,20 @@ const getUsdPrices = async (tokenInAddress: string, tokenOutAddress: string) => 
 
 export const SwapCard = () => {
   const { authenticate, isAuthenticating } = useMoralis();
+  const { data: avgGasArr } = useMoralisCloudFunction('getAvgGas');
+
   const snap = useSnapshot(state);
   const userBalances = useUserBalance();
 
-  const [amounts, setAmounts] = useState({
-    amountIn: 1,
-    amountOut: 0,
-  });
+  const [amountIn, setAmountIn] = useState(1);
+  const [amountOut, setAmountOut] = useState(0);
 
   const updateAmount = (amount: number, type: 'in' | 'out') => {
-    const tokenType = type === 'in' ? 'amountIn' : 'amountOut';
-    setAmounts({
-      ...amounts,
-      [tokenType]: amount,
-    });
+    if (type === 'in') {
+      setAmountIn(amount);
+    } else {
+      setAmountOut(amount);
+    }
   };
 
   const [tokens, setTokens] = useState({
@@ -63,6 +65,7 @@ export const SwapCard = () => {
   const updateToken = (token: TokenType, type: 'in' | 'out') => {
     console.log('updateToken', token);
     const tokenType = type === 'in' ? 'tokenIn' : 'tokenOut';
+
     setTokens({
       ...tokens,
       [tokenType]: token,
@@ -80,21 +83,21 @@ export const SwapCard = () => {
     setSync(false);
 
     const { tokenIn, tokenOut } = tokens;
-    const { amountIn } = amounts;
 
     if (!amountIn) {
       return;
     }
 
     const x = await fetchOnchainPrices({
-      fromToken: tokenIn.address,
-      toToken: tokenOut.address,
+      fromToken: tokenIn.address === ZERO_ADDRESS ? WAVAX : tokenIn.address,
+      toToken: tokenOut.address === ZERO_ADDRESS ? WAVAX : tokenOut.address,
       // @ts-expect-error: toBN should eat BigNumber
       amountIn: Web3.utils.toBN(toBaseUnit(String(amountIn), tokenIn.decimals)),
     });
 
+    console.log(x);
+
     const results = x!.map((v) => {
-      console.log(v.amountOut);
       return {
         ...v,
         amountOut: !new BigNumber(v.amountOut).isZero()
@@ -104,10 +107,8 @@ export const SwapCard = () => {
       };
     });
     const amountOutValues = results.map((v) => Number(v.amountOut));
-    setAmounts({
-      ...amounts,
-      amountOut: Math.max(...amountOutValues),
-    });
+
+    setAmountOut(Math.max(...amountOutValues));
 
     results.sort((dexA, dexB) => Number(dexB.amountOut) - Number(dexA.amountOut));
 
@@ -135,7 +136,7 @@ export const SwapCard = () => {
       setTimerKey(timerKey + 1);
     },
     500,
-    [tokens, amounts.amountIn]
+    [tokens, amountIn]
   );
 
   const swapSelects = () => {
@@ -143,10 +144,9 @@ export const SwapCard = () => {
       tokenIn: tokens.tokenOut,
       tokenOut: tokens.tokenIn,
     });
-    setAmounts({
-      amountIn: amounts.amountOut,
-      amountOut: 0,
-    });
+
+    setAmountIn(amountOut);
+    setAmountOut(0);
   };
 
   const getSyncPrices = (): [boolean, number] => {
@@ -181,6 +181,62 @@ export const SwapCard = () => {
     };
 
     swap(payload);
+  };
+
+  const inputTokenUserBalance = userBalances.tokens.find(
+    (v) => v.token_address.toLowerCase() === tokens.tokenIn.address.toLowerCase()
+  );
+  const outputTokenUserBalance = userBalances.tokens.find(
+    (v) => v.token_address.toLowerCase() === tokens.tokenOut.address.toLowerCase()
+  );
+
+  const marketPrice = usdPrices
+    ? amountIn *
+      usdPrices[
+        tokens.tokenIn.address.toLowerCase() === ZERO_ADDRESS
+          ? WAVAX.toLowerCase()
+          : tokens.tokenIn.address.toLowerCase()
+      ]?.usd
+    : null;
+  const receivedPrice = usdPrices
+    ? amountOut *
+      usdPrices[
+        tokens.tokenOut.address.toLowerCase() === ZERO_ADDRESS
+          ? WAVAX.toLowerCase()
+          : tokens.tokenOut.address.toLowerCase()
+      ]?.usd
+    : null;
+  const priceImpact = marketPrice && receivedPrice ? (1 - receivedPrice / marketPrice) * 100 : 0;
+
+  const [gasPrice, setGasPrice] = useState(0);
+  useEffect(() => {
+    if (!(avgGasArr && usdPrices)) {
+      return;
+    }
+
+    const avgGasSum = (avgGasArr as any[]).reduce((prev, cur) => prev + cur.avgGas, 0);
+    const avgGas = avgGasSum / (avgGasArr as any[]).length;
+
+    const gasInAVAX = Number(state.swapInfo.routing?.gasEstimate) * (avgGas as number) * 10 ** -9;
+    setGasPrice(gasInAVAX);
+  }, [avgGasArr, usdPrices, state.swapInfo.routing?.gasEstimate]);
+
+  const setMaxAmount = (type: 'in' | 'out') => {
+    if (type === 'out') {
+      return;
+    }
+
+    const balance =
+      tokens.tokenIn.address.toLowerCase() === ZERO_ADDRESS.toLowerCase()
+        ? formatTokenBalance(userBalances.native, '18')
+        : formatTokenBalance(inputTokenUserBalance?.balance, inputTokenUserBalance?.decimals);
+
+    console.log();
+    if (!balance) {
+      return;
+    }
+
+    setAmountIn(Number(balance));
   };
 
   return (
@@ -227,8 +283,12 @@ export const SwapCard = () => {
                   />
                 </svg>
                 <span className="font-medium">
-                  {userBalances.tokens.find((v) => v.token_address === tokens.tokenIn.address)
-                    ? userBalances.tokens.find((v) => v.token_address === tokens.tokenIn.address)?.balance
+                  {tokens.tokenIn.address === ZERO_ADDRESS
+                    ? (Number(userBalances.native) * 10 ** -18).toFixed(4)
+                    : inputTokenUserBalance
+                    ? Number(formatTokenBalance(inputTokenUserBalance.balance, inputTokenUserBalance.decimals)).toFixed(
+                        4
+                      )
                     : '0.0'}{' '}
                   {snap.swapInfo.tokens.tokenInSymbol}
                 </span>
@@ -236,7 +296,24 @@ export const SwapCard = () => {
             </div>
             <div className="flex h-16 pt-2 relative">
               <SwapSelect tokenList={tokenList} token={tokens.tokenIn} setToken={(token) => updateToken(token, 'in')} />
-              <SwapInput amount={amounts.amountIn} setAmount={(amount) => updateAmount(amount, 'in')} />
+              <div className="relative w-full">
+                <span className="text-xs right-0 -bottom-6 absolute font-light">
+                  {usdPrices
+                    ? `~$${(
+                        usdPrices[
+                          tokens.tokenIn.address.toLowerCase() === ZERO_ADDRESS
+                            ? WAVAX.toLowerCase()
+                            : tokens.tokenIn.address.toLowerCase()
+                        ]?.usd * amountIn
+                      ).toFixed(2)}`
+                    : `~$0`}
+                </span>
+                <SwapInput
+                  amount={amountIn}
+                  setMaxAmount={() => setMaxAmount('in')}
+                  setAmount={(amount) => updateAmount(amount, 'in')}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -262,7 +339,7 @@ export const SwapCard = () => {
             </button>
           )}
         </div>
-        <div className="mb-8 space-x-2">
+        <div className="mb-10 space-x-2">
           <div className="w-full">
             <div className="flex justify-between text-sm">
               <span>Receive</span>
@@ -282,8 +359,12 @@ export const SwapCard = () => {
                   />
                 </svg>
                 <span className="font-medium">
-                  {userBalances.tokens.find((v) => v.token_address === tokens.tokenOut.address)
-                    ? userBalances.tokens.find((v) => v.token_address === tokens.tokenOut.address)?.balance
+                  {tokens.tokenOut.address === ZERO_ADDRESS
+                    ? (Number(userBalances.native) * 10 ** -18).toFixed(4)
+                    : outputTokenUserBalance
+                    ? Number(
+                        formatTokenBalance(outputTokenUserBalance.balance, outputTokenUserBalance.decimals)
+                      ).toFixed(4)
                     : '0.0'}{' '}
                   {snap.swapInfo.tokens.tokenOutSymbol}
                 </span>
@@ -295,14 +376,34 @@ export const SwapCard = () => {
                 token={tokens.tokenOut}
                 setToken={(token) => updateToken(token, 'out')}
               />
-              <SwapInput amount={amounts.amountOut} setAmount={(amount) => updateAmount(amount, 'out')} />
+              <div className="relative w-full">
+                <span className="text-xs right-0 -bottom-6 absolute font-light">
+                  {usdPrices
+                    ? `~$${(
+                        usdPrices[
+                          tokens.tokenOut.address.toLowerCase() === ZERO_ADDRESS
+                            ? WAVAX.toLowerCase()
+                            : tokens.tokenOut.address.toLowerCase()
+                        ]?.usd * amountOut
+                      ).toFixed(2)}`
+                    : `~$0`}
+                </span>
+                <SwapInput
+                  amount={amountOut}
+                  setMaxAmount={() => setMaxAmount('out')}
+                  setAmount={(amount) => updateAmount(amount, 'out')}
+                />
+              </div>
             </div>
           </div>
         </div>
         <div className="w-full">
           {snap.user ? (
-            Number(userBalances.tokens.find((v) => v.token_address === tokens.tokenIn.address)?.balance) >=
-            amounts.amountIn ? (
+            Number(
+              tokens.tokenIn.address === ZERO_ADDRESS
+                ? formatTokenBalance(userBalances.native, '18')
+                : formatTokenBalance(inputTokenUserBalance?.balance, inputTokenUserBalance?.decimals)
+            ) >= amountIn ? (
               <button onClick={swapTokens} className="btn w-full btn-primary">
                 Swap
               </button>
@@ -333,38 +434,69 @@ export const SwapCard = () => {
             <span>Price</span>
             <span>
               <span className="font-medium">
-                {amounts.amountOut
-                  ? amounts.amountIn / amounts.amountOut > 0
-                    ? (amounts.amountIn / amounts.amountOut).toFixed(4).toLocaleString()
-                    : (amounts.amountIn / amounts.amountOut).toPrecision(4)
+                {amountOut
+                  ? amountIn / amountOut > 0
+                    ? (amountIn / amountOut).toFixed(4).toLocaleString()
+                    : (amountIn / amountOut).toPrecision(4)
                   : 0}
               </span>{' '}
               {snap.swapInfo.tokens.tokenInSymbol}/{snap.swapInfo.tokens.tokenOutSymbol}
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span>Estimated cost</span>
+            <span>Price impact</span>
             <span>
-              <span className="font-medium">0</span> AVAX
+              <span className="font-medium">{priceImpact.toFixed(2)}</span>%
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span>Minimum received</span>
-            <span className="">
+            <span>Gas cost</span>
+            <span>
+              <span className="font-light text-xs mr-2">
+                ~${usdPrices ? (gasPrice * usdPrices[WAVAX.toLowerCase()]?.usd).toFixed(2) : 0}
+              </span>
+              <span className="font-medium">{gasPrice.toPrecision(2)}</span>AVAX
+            </span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span>Min. to receive</span>
+            <span>
               <span className="font-light text-xs mr-2">
                 ~$
                 {usdPrices
-                  ? usdPrices[tokens.tokenOut.address.toLowerCase()]?.usd * amounts.amountOut > 0
+                  ? usdPrices[
+                      tokens.tokenOut.address.toLowerCase() === ZERO_ADDRESS
+                        ? WAVAX.toLowerCase()
+                        : tokens.tokenOut.address.toLowerCase()
+                    ]?.usd *
+                      amountOut >
+                    0
                     ? Number(
-                        (usdPrices[tokens.tokenOut.address.toLowerCase()]?.usd * amounts.amountOut).toFixed(2)
+                        (
+                          usdPrices[
+                            tokens.tokenOut.address.toLowerCase() === ZERO_ADDRESS
+                              ? WAVAX.toLowerCase()
+                              : tokens.tokenOut.address.toLowerCase()
+                          ]?.usd *
+                          amountOut *
+                          0.98
+                        ).toFixed(2)
                       ).toLocaleString()
-                    : (usdPrices[tokens.tokenOut.address.toLowerCase()]?.usd * amounts.amountOut).toPrecision(4)
+                    : (
+                        usdPrices[
+                          tokens.tokenOut.address.toLowerCase() === ZERO_ADDRESS
+                            ? WAVAX.toLowerCase()
+                            : tokens.tokenOut.address.toLowerCase()
+                        ]?.usd *
+                        amountOut *
+                        0.98
+                      ).toPrecision(4)
                   : ''}
               </span>
               <span className="font-medium">
-                {amounts.amountOut * 0.98 > 0
-                  ? Number(amounts.amountOut.toFixed(4)).toLocaleString()
-                  : amounts.amountOut.toPrecision(4).toLocaleString()}
+                {amountOut * 0.98 > 0
+                  ? Number((amountOut * 0.98).toFixed(4)).toLocaleString()
+                  : (amountOut * 0.98).toPrecision(4).toLocaleString()}
               </span>{' '}
               {snap.swapInfo.tokens.tokenOutSymbol}
             </span>

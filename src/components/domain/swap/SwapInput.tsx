@@ -4,12 +4,10 @@ interface ISwapInputProps {
   amount: number;
   setAmount: (amount: number) => void;
   disabled?: boolean;
+  setMaxAmount: () => void;
 }
 
-const SwapInput = ({ amount, setAmount, disabled }: ISwapInputProps) => {
-  // const handleAmountChange = (e: SyntheticEvent) => {
-  // };
-
+const SwapInput = ({ amount, setAmount, disabled, setMaxAmount }: ISwapInputProps) => {
   return (
     <div className="form-control h-full w-full relative">
       <NumberFormat
@@ -25,7 +23,9 @@ const SwapInput = ({ amount, setAmount, disabled }: ISwapInputProps) => {
         }}
       />
       <div className="absolute right-2 top-1/2 -translate-y-1/2">
-        <button className="btn btn-ghost btn-xs">max</button>
+        <button onClick={setMaxAmount} className="btn btn-ghost btn-xs">
+          max
+        </button>
       </div>
     </div>
   );

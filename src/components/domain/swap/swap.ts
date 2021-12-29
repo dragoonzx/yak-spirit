@@ -34,10 +34,9 @@ export const swap = async (payload: any) => {
               adapters: trade.adapters,
             },
             userAddress,
-            fee,
-            { value: trade.amounts[0] }
+            fee
           )
-          .send({ from: userAddress });
+          .send({ from: userAddress, value: trade.amounts[0] });
         return tx;
       } else {
         // handle approval

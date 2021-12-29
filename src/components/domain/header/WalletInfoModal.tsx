@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { useUserBalance } from '~/state';
+import { formatTokenBalance } from '~/utils/formatters';
 
 interface IWalletInfoModalProps {
   isOpen: boolean;
@@ -56,13 +57,18 @@ const WalletInfoModal = ({ isOpen, setIsOpen, logout }: IWalletInfoModalProps) =
               <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                 Account
               </Dialog.Title>
-              <div className="mt-2">
-                <p className="text-sm text-gray-500">Balance: {balance.native} AVAX</p>
-                {balance.tokens.map((token) => (
-                  <p key={token.symbol}>
-                    {token.name} balance: {token.balance} {token.symbol}
-                  </p>
-                ))}
+              <div className="text-gray-500">
+                <p className="mb-2">Balance: {formatTokenBalance(balance.native, '18')} AVAX</p>
+                <span className="font-bold">ERC-20 Tokens</span>
+                {balance.tokens.length !== 0 ? (
+                  balance.tokens.map((token) => (
+                    <p key={token.symbol}>
+                      {token.name} balance: {formatTokenBalance(token.balance, token.decimals)} {token.symbol}
+                    </p>
+                  ))
+                ) : (
+                  <p>No tokens</p>
+                )}
               </div>
 
               <div className="mt-4">
