@@ -8,6 +8,10 @@ import commonjs from '@rollup/plugin-commonjs';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), commonjs()],
+  mode: 'development',
+  build: {
+    minify: false,
+  },
   resolve: {
     alias: {
       process: 'process/browser',
