@@ -3,15 +3,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import commonjs from '@rollup/plugin-commonjs';
+import cjs from 'rollup-plugin-cjs';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths(), commonjs()],
+  plugins: [react(), tsconfigPaths()],
   mode: 'development',
-  build: {
-    minify: false,
-  },
   resolve: {
     alias: {
       process: 'process/browser',
@@ -27,8 +24,12 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 4000,
+    rollupOptions: {
+      // @ts-expect-error
+      plugins: [cjs()],
+    },
+    minify: false,
   },
-  // @ts-expect-error
   commonjsOptions: {
     exclude: [/./],
   },
