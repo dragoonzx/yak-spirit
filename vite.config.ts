@@ -8,7 +8,6 @@ import cjs from 'rollup-plugin-cjs';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
-  mode: 'development',
   resolve: {
     alias: {
       process: 'process/browser',
