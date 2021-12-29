@@ -7,8 +7,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && yarn cp-libs",
     "serve": "vite preview",
+    "cp-libs": "cp ./tools/browserified-libs/browserified-libs.js ./dist/",
     "cypress:open": "cypress open",
     "test:unit": "vitest",
     "test:coverage": "vitest --coverage"
