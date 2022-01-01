@@ -5,6 +5,7 @@ import PairABI from '~/abis/PairABI.json';
 import YakRouterABI from '~/abis/YakRouter.json';
 import { ADDRESSES, AVALANCHE_CHAIN_ID } from '~/utils/constants';
 import { BigNumber } from 'bignumber.js';
+import { getUserBalances } from '~/utils/getUserBalances';
 
 const provider = window.ethereum;
 const web3 = new Web3(provider);
@@ -148,6 +149,8 @@ export const swap = async (payload: any) => {
     } catch (err) {
       console.log('swap', err);
       return false;
+    } finally {
+      getUserBalances();
     }
   }
 };

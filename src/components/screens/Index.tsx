@@ -1,14 +1,35 @@
 import classNames from 'classnames';
 import { Head } from '~/components/shared/Head';
-import { appSettings, useSnapshot } from '~/state';
+import { appSettings, state, useSnapshot } from '~/state';
 import SwapExchanges from '../domain/exchanges/SwapExchanges';
 import SwapRouting from '../domain/routing/SwapRouting';
-import { SwapCard } from '../domain/swap/SwapCard';
+// import { SwapCard } from '../domain/swap/SwapCard';
+import YakSwap from '../yak-swap';
+import { YIELD_YAK_PLATFORM } from '../yak-swap/utils/constants';
 
 function Index() {
   const { visibility } = useSnapshot(appSettings);
 
   const onlySwapVisible = !(visibility.exchanges || visibility.routing);
+
+  const handleOfferReceive = (offer: any) => {
+    console.log(offer);
+    // state.swapInfo.tokens = {
+    //   tokenInSymbol: tokenIn.symbol,
+    //   tokenOutSymbol: tokenOut.symbol,
+    // };
+    offer.sort((dexA, dexB) => Number(dexB.amountOut) - Number(dexA.amountOut));
+    state.swapInfo.exchanges = offer;
+    const yakOffer = offer.find((v) => v.platform === YIELD_YAK_PLATFORM)?.yakOffer;
+    state.swapInfo.routing.path = yakOffer.path;
+    state.swapInfo.routing.amounts = yakOffer.amounts;
+    state.swapInfo.routing.gasEstimate = yakOffer.gasEstimate;
+    state.swapInfo.routing.adapters = yakOffer.adapters;
+  };
+
+  const handleQuotesLoading = (loading: boolean) => {
+    state.loadingQuotes = loading;
+  };
 
   return (
     <>
@@ -20,7 +41,8 @@ function Index() {
         )}
       >
         <div className="col-span-5 row-span-3" style={{ gridRowStart: 1, gridRowEnd: 3 }}>
-          <SwapCard />
+          {/* <SwapCard /> */}
+          <YakSwap onOfferReceive={handleOfferReceive} onQuotesLoading={handleQuotesLoading} />
         </div>
         {visibility.routing && (
           <div className="col-span-7 row-span-1">

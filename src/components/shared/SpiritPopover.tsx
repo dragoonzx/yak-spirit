@@ -16,7 +16,7 @@ const SpiritPopover = ({
         <>
           <Popover.Button
             className={`
-                ${open ? 'bg-primary' : ''}
+                ${open ? 'bg-primary/40' : ''}
                 btn btn-square btn-ghost`}
             style={btnStyle}
           >

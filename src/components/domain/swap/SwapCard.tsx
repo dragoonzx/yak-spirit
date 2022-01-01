@@ -231,7 +231,6 @@ export const SwapCard = () => {
         ? formatTokenBalance(userBalances.native, '18')
         : formatTokenBalance(inputTokenUserBalance?.balance, inputTokenUserBalance?.decimals);
 
-    console.log();
     if (!balance) {
       return;
     }

@@ -1,15 +1,28 @@
 import SpiritPopover from '~/components/shared/SpiritPopover';
+import { useLocalStorage } from 'react-use';
 import { appSettings, useSnapshot } from '~/state';
+import { useEffect } from 'react';
 
 const blocks: ['routing', 'exchanges'] = ['routing', 'exchanges'];
 
 const AppSettings = () => {
   const snap = useSnapshot(appSettings);
+
+  const [blocksLS, setBlocksLS] = useLocalStorage('blocks', JSON.stringify({ routing: true, exchanges: true }));
+
+  useEffect(() => {
+    if (!blocksLS) {
+      return;
+    }
+    appSettings.visibility = JSON.parse(blocksLS);
+  }, []);
+
   const handleVisibilityChange = (block: 'routing' | 'exchanges') => {
     appSettings.visibility = {
       ...appSettings.visibility,
       [block]: !appSettings.visibility[block],
     };
+    setBlocksLS(JSON.stringify(appSettings.visibility));
   };
 
   const btn = (
@@ -41,13 +54,13 @@ const AppSettings = () => {
               {blocks.map((v) => (
                 <div className="p-1 mb-2 card bordered" key={v}>
                   <div className="form-control">
-                    <label className="cursor-pointer label">
-                      <span className="label-text capitalize">{v}</span>
+                    <label className="cursor-pointer label px-3">
+                      <span className="label-text capitalize text-sm">{v}</span>
                       <input
                         type="checkbox"
                         checked={snap.visibility[v]}
                         onChange={() => handleVisibilityChange(v)}
-                        className="toggle"
+                        className="toggle toggle-sm"
                       />
                     </label>
                   </div>
@@ -59,9 +72,9 @@ const AppSettings = () => {
         <div className="collapse mt-4 border rounded-box border-base-300 collapse-arrow">
           <input type="checkbox" />
           <div className="collapse-title font-medium">Info</div>
-          <div className="collapse-content">
+          <div className="collapse-content text-sm">
             <p>
-              <span className="badge">Yak Spirit</span> offers new experience of YY Swap usage. Learn more on{' '}
+              Themes, more info & auto sync. Learn more about Yak Spirit on{' '}
               <a className="link link-primary" href="github.com/dragoonzx/yak-spirit" target="_blank">
                 github
               </a>

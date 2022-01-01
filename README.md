@@ -1,28 +1,37 @@
+<img src="./src/assets/images/yak-spirit/yak-favicon.png" width="150" align="right" alt="" />
+
 # 🐃 Yak Spirit Frontend
 
-An open-source interface for Yield Yak Swap. Features that you always want to:
-1 theming, 2 settings & auto-update, 3 ..., 4 ...
+> Interface for Yield Yak Swap
 
-## Motivation
+- Multiple **themes** and **languages** support.
+- UI **customization**.
+- Automatic quotes **fetching** — always up-to-date quotes.
+- Example of [Yak Swap UI component](https://github.com/dragoonzx/yak-swap-ui) usage — earn fees with reusable React component.
+- With community in mind — feel free to contribute!
 
-Improve building your faster **prototyping** by using Vite, TypeScript, React, TailwindCSS, Firebase.
+<p align="center">
+  <img src="./src/assets/images/yak-spirit/yak-spirit5.png" alt="Yak Spirit logo" width="450">
+</p>
 
-This starter uses following libraries:
-
-- Vite
-- React
-- TypeScript
-- Tailwind CSS
-  - daisyUI
-- ESLint
-- Prettier
-- Cypress (for E2E and Component Testing)
-- Vitest (for unit tests)
-
-## Set up
+# Set up
 
 ```shell
 mv .env.example .env.local
 yarn
 yarn dev
 ```
+
+# Contributing
+
+Interested in contributing to the Yak Spirit or Yak Swap UI? Thanks so much for your interest! We are always looking for improvements to the project and contributions from open-source developers are greatly appreciated.
+
+If you have a contribution in mind, please open issue or PR with your ideas.
+
+# Licence
+
+Yak Spirit & Yak Swap UI is [GNU-3 licensed](https://github.com/dragoonzx/yak-spirit/blob/main/LICENSE)
+
+<p align="center">
+  <img src="./src/assets/gif/loading-unscreen.gif" alt="" width="50">
+</p>

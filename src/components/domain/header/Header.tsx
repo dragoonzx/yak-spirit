@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
-import { state, userBalanceStore } from '~/state';
+import { state } from '~/state';
 import yakSpiritLogo from '~/assets/images/yak-spirit/yak-spirit5.png';
 import I18n from '../i18n/I18n';
 import Theming from '../theming/Theming';
 import AppSettings from './AppSettings';
 import WalletInfoModal from './WalletInfoModal';
-import Moralis from 'moralis';
+import { getUserBalances } from '~/utils/getUserBalances';
 
 function Header() {
   const { authenticate, isAuthenticated, isAuthenticating, logout, user } = useMoralis();
@@ -17,22 +17,6 @@ function Header() {
   }, [user]);
 
   useEffect(() => {
-    const getUserBalances = async () => {
-      if (!user) {
-        return;
-      }
-
-      const options: { chain: 'avalanche'; address: string } = { chain: 'avalanche', address: user.get('ethAddress') };
-
-      const tokenBalances = await Promise.all([
-        Moralis.Web3API.account.getTokenBalances(options),
-        Moralis.Web3API.account.getNativeBalance(options),
-      ]);
-      console.log(tokenBalances);
-      userBalanceStore.tokens = tokenBalances[0];
-      userBalanceStore.native = tokenBalances[1].balance;
-    };
-
     getUserBalances();
   }, [user]);
 
@@ -66,8 +50,8 @@ function Header() {
                 <button
                   onClick={isAuthenticated ? openModal : () => authenticate()}
                   className={classNames(
-                    'btn btn-sm rounded-btn ml-2',
-                    isAuthenticated ? 'btn-info lowercase' : 'btn-ghost'
+                    'btn btn-sm rounded-btn ml-2 font-sm',
+                    isAuthenticated ? 'btn-secondary lowercase' : 'btn-ghost'
                   )}
                 >
                   {isAuthenticating ? (

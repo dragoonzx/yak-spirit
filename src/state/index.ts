@@ -10,9 +10,10 @@ interface ISwapInfo {
   };
   exchanges: {
     platform: string;
-    amountOut: string | number;
+    amountOut: string;
+    formattedAmountOut: string;
   }[];
-  routing: IYakOffer | null | undefined;
+  routing: IYakOffer;
 }
 
 interface IState {
@@ -29,7 +30,12 @@ export const state: IState = proxy({
       tokenInSymbol: 'PNG',
       tokenOutSymbol: 'PNG',
     },
-    routing: null,
+    routing: {
+      path: [],
+      adapters: [],
+      amounts: [],
+      gasEstimate: '0',
+    },
   },
   loadingQuotes: true,
 });

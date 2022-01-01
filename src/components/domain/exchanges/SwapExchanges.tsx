@@ -11,66 +11,66 @@ const helperStyle = {
 const DEXES: Record<string, any> = {
   pangolin: {
     title: 'pangolin',
-    logo: '/assets/images/providers/pangolin.jpeg',
+    logo: 'pangolin.jpeg',
     link: 'https://pangolin.exchange/',
   },
   zero: {
     title: 'zero',
-    logo: '/assets/images/providers/zero.jpeg',
+    logo: 'zero.jpeg',
   },
   complus: {
     title: 'complus',
-    logo: '/assets/images/providers/complus.png',
+    logo: 'complus.png',
     link: 'https://complus.exchange/',
   },
   elk: {
     title: 'elk',
-    logo: '/assets/images/providers/elk.jpeg',
+    logo: 'elk.jpeg',
     link: 'https://avax.elk.finance/',
   },
   yetiswap: {
     title: 'yetiswap',
-    logo: '/assets/images/providers/yetiswap.jpeg',
+    logo: 'yetiswap.jpeg',
     link: 'https://www.yetiswap.app/',
   },
   pandaswap: {
     title: 'pandaswap',
-    logo: '/assets/images/providers/pandaswap.jpeg',
+    logo: 'pandaswap.jpeg',
     link: 'https://www.pandaswap.info/',
   },
   sushi: {
     title: 'sushi',
-    logo: '/assets/images/providers/sushi.jpeg',
+    logo: 'sushi.jpeg',
     link: 'https://sushi.com/',
   },
   olive: {
     title: 'olive',
-    logo: '/assets/images/providers/olive.png',
+    logo: 'olive.png',
     link: 'https://avax.olive.cash/',
   },
   lydia: {
     title: 'lydia',
-    logo: '/assets/images/providers/lydia.jpeg',
+    logo: 'lydia.jpeg',
     link: 'https://www.lydia.finance/',
   },
   baquette: {
     title: 'baquette',
-    logo: '/assets/images/providers/baguette.jpeg',
+    logo: 'baguette.jpeg',
     link: 'https://baguette.exchange/',
   },
   canary: {
     title: 'canary',
-    logo: '/assets/images/providers/canary.jpeg',
+    logo: 'canary.jpeg',
     link: 'https://canary.exchange/',
   },
   traderjoe: {
     title: 'traderjoe',
-    logo: '/assets/images/providers/traderjoe.jpeg',
+    logo: 'traderjoe.jpeg',
     link: 'https://traderjoexyz.com/',
   },
   'Yield Yak': {
     title: 'yak',
-    logo: '/assets/images/providers/yak.png',
+    logo: 'yak.png',
     link: 'https://yieldyak.com/',
   },
 };
@@ -101,7 +101,7 @@ const SwapExchanges = () => {
               <tbody className="text-center">
                 {snap.swapInfo.exchanges.length !== 0
                   ? snap.swapInfo.exchanges.map((exchange, index) => {
-                      return exchange.amountOut !== 0 ? (
+                      return Number(exchange.formattedAmountOut) !== 0 ? (
                         <tr key={exchange.platform}>
                           <td>
                             <a
@@ -111,27 +111,36 @@ const SwapExchanges = () => {
                               className="contents"
                             >
                               <div className="flex items-center text-sm">
-                                <img
-                                  src={`/src${DEXES[exchange.platform]?.logo}`}
-                                  alt=""
-                                  className="h-8 rounded mr-4"
-                                />
+                                {DEXES[exchange.platform]?.logo && (
+                                  <img
+                                    src={
+                                      require(`../../../assets/images/providers/${DEXES[exchange.platform]?.logo}`)
+                                        .default
+                                    }
+                                    alt=""
+                                    className="h-8 rounded mr-4"
+                                  />
+                                )}
                                 <p className="capitalize">{exchange.platform}</p>
                               </div>
                             </a>
                           </td>
-                          <td className="text-sm">{Number(exchange.amountOut).toLocaleString()}</td>
+                          <td className="text-sm">{Number(exchange.formattedAmountOut).toLocaleString()}</td>
                           <td>
                             <div
                               className={classNames(
                                 'p-1 w-16 text-center text-sm rounded mx-auto',
-                                bestOffer.amountOut === exchange.amountOut ? 'bg-primary' : 'bg-error/40'
+                                bestOffer.formattedAmountOut === exchange.formattedAmountOut
+                                  ? 'bg-primary text-primary-content'
+                                  : 'bg-error text-neutral'
                               )}
                             >
-                              {bestOffer.amountOut === exchange.amountOut
+                              {bestOffer.formattedAmountOut === exchange.formattedAmountOut
                                 ? 'Best'
                                 : `-${Number(
-                                    (1 - Number(exchange.amountOut) / Number(state.swapInfo.exchanges[0].amountOut)) *
+                                    (1 -
+                                      Number(exchange.formattedAmountOut) /
+                                        Number(state.swapInfo.exchanges[0].formattedAmountOut)) *
                                       100
                                   ).toFixed(2)}%`}
                             </div>
