@@ -4,7 +4,7 @@ module.exports = (api) => {
   return {
     env: {
       production: {
-        presets: ['minify'],
+        presets: [['minify', { builtIns: false }]],
       },
     },
     compact: false,

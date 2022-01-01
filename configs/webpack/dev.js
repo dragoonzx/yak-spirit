@@ -4,7 +4,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 const commonConfig = require('./common');
 
-module.exports = merge(commonConfig, {
+module.exports = merge(commonConfig(), {
   mode: 'development',
   entry: [
     'react-hot-loader/patch', // activate HMR for React

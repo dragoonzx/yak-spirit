@@ -6,7 +6,7 @@
     "name": "dragoonzx"
   },
   "scripts": {
-    "build": "yarn run clean-dist && webpack --config=configs/webpack/prod.js",
+    "build": "yarn run clean-dist && webpack --env production --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
     "start": "yarn run dev",
     "dev": "webpack serve --config=configs/webpack/dev.js",
@@ -59,6 +59,7 @@
     "@vitejs/plugin-react": "^1.0.0",
     "autoprefixer": "^10.3.1",
     "babel-loader": "^8.2.3",
+    "babel-preset-minify": "^0.5.1",
     "browserify-zlib": "^0.2.0",
     "css-loader": "^6.5.1",
     "cypress": "^9.2.0",
