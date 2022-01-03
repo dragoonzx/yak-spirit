@@ -2,11 +2,15 @@
 
 # 🐃 Yak Spirit Frontend
 
+![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=yak-spirit-dragoonzx)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 > Interface for Yield Yak Swap
 
 - Multiple **themes** and **languages** support.
 - UI **customization**.
 - Automatic quotes **fetching** — always up-to-date quotes.
+- See arbitrage opportunities
 - Example of [Yak Swap UI component](https://github.com/dragoonzx/yak-swap-ui) usage — earn fees with reusable React component.
 - With community in mind — feel free to contribute!
 
