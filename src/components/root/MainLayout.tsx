@@ -1,18 +1,23 @@
-import { Router } from '~/components/router/Router';
 import Header from '~/components/domain/header/Header';
 import { NetworkAlert } from '../domain/network-alert/NetworkAlert';
 import Footer from '../domain/footer/Footer';
+import { lazy } from 'react';
+import { Route } from 'react-router-dom';
+import Landing from '../screens/Landing';
 // import { ToastContainer } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-function Main() {
+const IndexScreen = lazy(() => import('~/components/screens/Index'));
+
+function MainLayout() {
   return (
     <div className="flex flex-col container mx-auto justify-between min-h-screen" id="yak-home">
       <div>
         <Header />
         <NetworkAlert />
         <main>
-          <Router />
+          <Route path="/app" exact component={IndexScreen} />
+          <Route path="/" exact component={Landing} />
         </main>
       </div>
       <Footer />
@@ -31,4 +36,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default MainLayout;

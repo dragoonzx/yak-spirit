@@ -1,10 +1,10 @@
 import { HelmetProvider } from 'react-helmet-async';
-import Main from '~/components/root/Main';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import enTranslation from '~/locales/en/index.json';
 import ruTranslation from '~/locales/ru/index.json';
+import { Router } from '../router/Router';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -26,7 +26,7 @@ i18n.use(initReactI18next).init({
 export const App = () => {
   return (
     <HelmetProvider>
-      <Main />
+      <Router />
     </HelmetProvider>
   );
 };

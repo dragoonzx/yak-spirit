@@ -71,12 +71,12 @@ const AppSettings = () => {
         </div>
         <div className="collapse mt-4 border rounded-box border-base-300 collapse-arrow">
           <input type="checkbox" />
-          <div className="collapse-title font-medium">Info</div>
+          <div className="collapse-title font-medium">Community</div>
           <div className="collapse-content text-sm">
             <p>
-              Themes, more info & auto sync. Learn more about Yak Spirit on{' '}
+              Learn more about contributions to Yak Spirit on{' '}
               <a className="link link-primary" href="github.com/dragoonzx/yak-spirit" target="_blank">
-                github
+                twitter
               </a>
             </p>
           </div>

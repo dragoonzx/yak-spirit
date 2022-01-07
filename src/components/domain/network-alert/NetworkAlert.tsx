@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
+import { useLocation } from 'react-router-dom';
 import Web3 from 'web3';
 
 const AVALANCHE_MAINNET = 43114;
@@ -46,6 +47,9 @@ const switchNetworkAvalanche = async () => {
 };
 
 export const NetworkAlert = () => {
+  const location = useLocation();
+  const isAppPage = location.pathname?.includes('app');
+
   const { Moralis } = useMoralis();
 
   const isMetaMaskInstalled = () => {
@@ -109,6 +113,10 @@ export const NetworkAlert = () => {
   }, [alert, chainId]);
 
   if (alert === null) {
+    return null;
+  }
+
+  if (!isAppPage) {
     return null;
   }
 

@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Head } from '~/components/shared/Head';
 import { appSettings, state, useSnapshot } from '~/state';
+import SwapChart from '../domain/chart/SwapChart';
 import SwapExchanges from '../domain/exchanges/SwapExchanges';
 import SwapRouting from '../domain/routing/SwapRouting';
 // import { SwapCard } from '../domain/swap/SwapCard';
@@ -44,6 +45,9 @@ function Index() {
           {/* <SwapCard /> */}
           <YakSwap onOfferReceive={handleOfferReceive} onQuotesLoading={handleQuotesLoading} />
         </div>
+        {/* <div className="col-span-7 row-span-1">
+          <SwapChart />
+        </div> */}
         {visibility.routing && (
           <div className="col-span-7 row-span-1">
             <SwapRouting />
