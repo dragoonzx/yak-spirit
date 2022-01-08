@@ -1,12 +1,12 @@
 import { proxy, useSnapshot, subscribe } from 'valtio';
 import Moralis from 'moralis';
 import { ADDRESSES } from '~/utils/constants';
-import { IYakOffer } from '~/types/yak';
+import { IYakOffer, YakTokenType } from '~/types/yak';
 
 interface ISwapInfo {
   tokens: {
-    tokenInSymbol: string;
-    tokenOutSymbol: string;
+    tokenIn: Partial<YakTokenType>;
+    tokenOut: Partial<YakTokenType>;
   };
   exchanges: {
     platform: string;
@@ -27,8 +27,14 @@ export const state: IState = proxy({
   swapInfo: {
     exchanges: [],
     tokens: {
-      tokenInSymbol: 'PNG',
-      tokenOutSymbol: 'PNG',
+      tokenIn: {
+        address: '',
+        symbol: 'AVAX',
+      },
+      tokenOut: {
+        address: '',
+        symbol: 'YAK',
+      },
     },
     routing: {
       path: [],

@@ -13,15 +13,22 @@ function Index() {
 
   const onlySwapVisible = !(visibility.exchanges || visibility.routing);
 
-  const handleOfferReceive = (offer: any) => {
-    console.log(offer);
-    // state.swapInfo.tokens = {
-    //   tokenInSymbol: tokenIn.symbol,
-    //   tokenOutSymbol: tokenOut.symbol,
-    // };
-    offer.sort((dexA, dexB) => Number(dexB.amountOut) - Number(dexA.amountOut));
-    state.swapInfo.exchanges = offer;
-    const yakOffer = offer.find((v) => v.platform === YIELD_YAK_PLATFORM)?.yakOffer;
+  const handleOfferReceive = ({ tokens, results }: any) => {
+    console.log(tokens);
+    if (
+      !(
+        tokens.tokenIn.address === state.swapInfo.tokens.tokenIn?.address &&
+        tokens.tokenOut.address === state.swapInfo.tokens.tokenOut?.address
+      )
+    ) {
+      state.swapInfo.tokens = {
+        tokenIn: tokens.tokenIn,
+        tokenOut: tokens.tokenOut,
+      };
+    }
+    results.sort((dexA, dexB) => Number(dexB.amountOut) - Number(dexA.amountOut));
+    state.swapInfo.exchanges = results;
+    const yakOffer = results.find((v) => v.platform === YIELD_YAK_PLATFORM)?.yakOffer;
     state.swapInfo.routing.path = yakOffer.path;
     state.swapInfo.routing.amounts = yakOffer.amounts;
     state.swapInfo.routing.gasEstimate = yakOffer.gasEstimate;
@@ -45,9 +52,9 @@ function Index() {
           {/* <SwapCard /> */}
           <YakSwap onOfferReceive={handleOfferReceive} onQuotesLoading={handleQuotesLoading} />
         </div>
-        {/* <div className="col-span-7 row-span-1">
+        <div className="col-span-7 row-span-1">
           <SwapChart />
-        </div> */}
+        </div>
         {visibility.routing && (
           <div className="col-span-7 row-span-1">
             <SwapRouting />

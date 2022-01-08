@@ -79,6 +79,7 @@
             "decimals": 18,
             "name": "Curve DAO Token",
             "symbol": "CRV.e",
+            "permitSupported": false,
             "logoURI": "https://raw.githubusercontent.com/ava-labs/avalanche-bridge-resources/main/tokens/CRV/logo.png"
         },
         {
@@ -104,6 +105,18 @@
             "name": "ChainLink Token",
             "symbol": "LINK.e",
             "logoURI": "https://raw.githubusercontent.com/ava-labs/avalanche-bridge-resources/main/tokens/LINK/logo.png"
+        },
+        {
+            "address": "0x346A59146b9b4a77100D369a3d18E8007A9F46a6",
+            "symbol": "AVAI",
+            "decimals": 18,
+            "permitSupported": true
+        },
+        {
+            "address": "0xcF8419A615c57511807236751c0AF38Db4ba3351",
+            "symbol": "AXIAL",
+            "decimals": 18,
+            "permitSupported": false
         },
         {
             "chainId": 43114,
@@ -191,6 +204,7 @@
             "decimals": 18,
             "name": "Wrapped ETH",
             "symbol": "WETH.e",
+            "permitSupported": false,
             "logoURI": "https://raw.githubusercontent.com/ava-labs/avalanche-bridge-resources/main/tokens/WETH/logo.png"
         },
         {
@@ -240,6 +254,18 @@
             "symbol": "CABAG",
             "decimals": 18,
             "logoURI": "https://raw.githubusercontent.com/qualitycabbage/token/main/logo.png"
+        },
+        {
+            "address": "0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
+            "symbol": "BLZZ",
+            "decimals": 18,
+            "permitSupported": false
+        },
+        {
+            "address": "0xa1144a6a1304bd9cbb16c800f7a867508726566e",
+            "symbol": "BAG",
+            "decimals": 18,
+            "permitSupported": true
         },
         {
             "chainId": 43114,
@@ -401,6 +427,29 @@
             "logoURI": "https://raw.githubusercontent.com/virtualdiamondtoken/site/main/logo.png"
         },
         {
+            "address": "0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
+            "symbol": "TUS",
+            "decimals": 18,
+            "permitSupported": false
+        },
+        {
+            "address": "0x3509f19581aFEDEff07c53592bc0Ca84e4855475",
+            "symbol": "xUSD",
+            "decimals": 18
+        },
+        {
+            "address": "0x57319d41F71E81F3c65F2a47CA4e001EbAFd4F33",
+            "symbol": "xJOE",
+            "decimals": 18,
+            "permitSupported": false
+        },
+        {
+            "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+            "symbol": "USDC",
+            "decimals": 6,
+            "permitSupported": true
+        },
+        {
             "chainId": 43114,
             "address": "0x76076880e1EBBcE597e6E15c47386cd34de4930F",
             "decimals": 18,
@@ -422,6 +471,7 @@
             "decimals": 18,
             "name": "Sherpa",
             "symbol": "SHERPA",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6/logo.png"
         },
         {
@@ -462,6 +512,7 @@
             "decimals": 18,
             "name": "Yield Yak",
             "symbol": "YAK",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x59414b3089ce2AF0010e7523Dea7E2b35d776ec7/logo.png"
         },
         {
@@ -470,7 +521,14 @@
             "decimals": 18,
             "name": "BENQI",
             "symbol": "QI",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5/logo.png"
+        },
+        {
+            "address": "0xdE9E52F1838951e4d2bb6C59723B003c353979b6",
+            "symbol": "sDOG",
+            "decimals": 9,
+            "permitSupported": true
         },
         {
             "chainId": 43114,
@@ -502,6 +560,7 @@
             "name": "Teddy Cash Token",
             "symbol": "TEDDY",
             "decimals": 18,
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x094bd7B2D99711A1486FB94d4395801C6d0fdDcC/logo.png"
         },
         {
@@ -510,6 +569,7 @@
             "name": "Joe Token",
             "symbol": "JOE",
             "decimals": 18,
+            "permitSupported": false,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd/logo.png"
         },
         {
@@ -662,6 +722,7 @@
             "decimals": 9,
             "name": "Time",
             "symbol": "TIME",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xb54f16fB19478766A268F172C9480f8da1a7c9C3/logo.png"
         },
         {
@@ -710,6 +771,7 @@
             "decimals": 18,
             "name": "Partyswap",
             "symbol": "PARTY",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x69A61f38Df59CBB51962E69C54D39184E21C27Ec/logo.png"
         },
         {
@@ -734,6 +796,7 @@
             "decimals": 12,
             "name": "MiniYAK",
             "symbol": "mYAK",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xdDAaAD7366B455AfF8E7c82940C43CEB5829B604/logo.png"
         },
         {
@@ -830,7 +893,14 @@
             "name": "OrcaDAO",
             "symbol": "ORCA",
             "decimals": 18,
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x8B1d98A91F853218ddbb066F20b8c63E782e2430/logo.png"
+        },
+        {
+            "address": "0x617724974218A18769020A70162165A539c07E8a",
+            "symbol": "OLIVE",
+            "decimals": 18,
+            "permitSupported": false
         },
         {
             "chainId": 43114,
@@ -887,6 +957,12 @@
             "symbol": "FXS",
             "decimals": 18,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x214DB107654fF987AD859F34125307783fC8e387/logo.png"
+        },
+        {
+            "address": "0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64",
+            "symbol": "FRAX",
+            "decimals": 18,
+            "permitSupported": true
         },
         {
             "address": "0xb2a85C5ECea99187A977aC34303b80AcbDdFa208",
@@ -958,6 +1034,7 @@
             "decimals": 18,
             "name": "Crabada",
             "symbol": "CRA",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xA32608e873F9DdEF944B24798db69d80Bbb4d1ed/logo.png"
         },
         {
@@ -982,6 +1059,7 @@
             "decimals": 9,
             "name": "Maximizer",
             "symbol": "MAXI",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x7C08413cbf02202a1c13643dB173f2694e0F73f0/logo.png"
         },
         {
@@ -990,6 +1068,7 @@
             "decimals": 18,
             "name": "Jewels",
             "symbol": "JEWEL",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x4f60a160D8C2DDdaAfe16FCC57566dB84D674BD6/logo.png"
         },
         {
@@ -1006,6 +1085,7 @@
             "decimals": 18,
             "name": "Governance OHM",
             "symbol": "gOHM",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x321E7092a180BB43555132ec53AaA65a5bF84251/logo.png"
         },
         {
@@ -1030,6 +1110,7 @@
             "decimals": 18,
             "name": "Colony Token",
             "symbol": "CLY",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6/logo.png"
         },
         {
@@ -1070,6 +1151,7 @@
             "decimals": 18,
             "name": "Platypus Token",
             "symbol": "PTP",
+            "permitSupported": true,
             "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x22d4002028f537599bE9f666d1c4Fa138522f9c8/logo.png"
         },
         {

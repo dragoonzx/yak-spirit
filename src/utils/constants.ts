@@ -2,6 +2,8 @@ export const AVALANCHE_CHAIN_ID = 43114;
 
 export const WAVAX = '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7';
 
+export const COINGECKO_API = 'https://api.coingecko.com/api/v3';
+
 export const ADDRESSES = {
   helpers: {
     yakRouter: '0xC4729E56b831d74bBc18797e0e17A295fA77488c',

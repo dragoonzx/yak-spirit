@@ -1,0 +1,13 @@
+.kek {
+  animation: blob 3s ease-in-out infinite alternate;
+  animation-delay: 3s;
+}
+
+@keyframes blob {
+  0% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

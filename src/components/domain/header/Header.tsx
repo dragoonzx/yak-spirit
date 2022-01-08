@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useCallback, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
 import { state } from '~/state';
-import yakSpiritLogo from '~/assets/images/yak-spirit/yak-spirit5.png';
+import yakSpiritLogo from '~/assets/images/yak-spirit/yak-filled-2.png';
 import I18n from '../i18n/I18n';
 import Theming from '../theming/Theming';
 import AppSettings from './AppSettings';
@@ -40,9 +40,11 @@ function Header() {
       <header>
         <div className="navbar px-4 mb-2 text-neutral-content rounded-box flex flex-col sm:flex-row">
           <div className="flex-1">
-            <span className="text-lg font-bold">
-              <img src={yakSpiritLogo} alt="" className="h-16" />
-            </span>
+            <Link to="/">
+              <span className="text-lg font-bold">
+                <img src={yakSpiritLogo} alt="" className="h-14" />
+              </span>
+            </Link>
           </div>
           <div>
             <div className="flex-none lg:flex text-secondary">

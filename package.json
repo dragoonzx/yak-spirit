@@ -39,6 +39,7 @@
     "react-toastify": "^8.1.0",
     "react-use": "^17.3.1",
     "react-windowed-select": "^3.1.2",
+    "recharts": "^2.1.8",
     "rollup-plugin-cjs": "^1.0.0",
     "stream-http": "^3.2.0",
     "valtio": "^1.2.7",

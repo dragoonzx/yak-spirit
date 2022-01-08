@@ -11,7 +11,7 @@ const IndexScreen = lazy(() => import('~/components/screens/Index'));
 
 function MainLayout() {
   return (
-    <div className="flex flex-col container mx-auto justify-between min-h-screen" id="yak-home">
+    <div className="flex flex-col container mx-auto justify-between min-h-screen relative" id="yak-home">
       <div>
         <Header />
         <NetworkAlert />

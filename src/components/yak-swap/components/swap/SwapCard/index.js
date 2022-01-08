@@ -45,7 +45,14 @@ export const SwapCard = (props) => {
                     : 0,
             };
         });
-        props.onOfferReceive && props.onOfferReceive(results);
+        props.onOfferReceive &&
+            props.onOfferReceive({
+                tokens: {
+                    tokenIn: swapState.tokenIn,
+                    tokenOut: swapState.tokenOut,
+                },
+                results,
+            });
         const amountOutValues = results.map((v) => Number(v.formattedAmountOut));
         swapState.amountOut = Math.max(...amountOutValues);
         results.sort((dexA, dexB) => Number(dexB.formattedAmountOut) - Number(dexA.formattedAmountOut));

@@ -4,6 +4,7 @@ import YakRouterABI from '../abis/YakRouter.json';
 import { ADDRESSES, AVALANCHE_CHAIN_ID } from '../utils/constants.js';
 import { BigNumber } from 'bignumber.js';
 import { userState } from '../state/index.js';
+import { tokenList } from './tokenList.js';
 const chainId = AVALANCHE_CHAIN_ID;
 const MaxUint256 = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 const yakRouterAddress = ADDRESSES.helpers.yakRouter;
@@ -32,11 +33,7 @@ export const swap = async (payload) => {
             else {
                 // handle approval
                 const fromTokenAddress = trade.path[0];
-                // get if permit from token is supported
-                // const permitSupported = TokenList[chainId].filter(
-                //   (token) => token.address.toLowerCase() == fromTokenAddress.toLowerCase()
-                // )[0].permitSupported;
-                const permitSupported = true;
+                const permitSupported = tokenList.find((token) => token.address.toLowerCase() === fromTokenAddress.toLowerCase())?.permitSupported;
                 const tokenContract = new web3.eth.Contract(PairABI, fromTokenAddress, {
                     from: userAddress,
                 });
