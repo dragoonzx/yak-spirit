@@ -4,6 +4,9 @@ export const WAVAX = '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7';
 
 export const COINGECKO_API = 'https://api.coingecko.com/api/v3';
 
+export const YIELD_YAK_PLATFORM = 'Yield Yak';
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+
 export const ADDRESSES = {
   helpers: {
     yakRouter: '0xC4729E56b831d74bBc18797e0e17A295fA77488c',
@@ -183,4 +186,71 @@ export const ADDRESSES = {
       platform: 'traderjoe',
     },
   ],
+};
+
+export const DEXES: Record<string, any> = {
+  pangolin: {
+    title: 'pangolin',
+    logo: 'pangolin.jpeg',
+    link: 'https://pangolin.exchange/',
+  },
+  zero: {
+    title: 'zero',
+    logo: 'zero.jpeg',
+  },
+  complus: {
+    title: 'complus',
+    logo: 'complus.png',
+    link: 'https://complus.exchange/',
+  },
+  elk: {
+    title: 'elk',
+    logo: 'elk.jpeg',
+    link: 'https://avax.elk.finance/',
+  },
+  yeti: {
+    title: 'yetiswap',
+    logo: 'yetiswap.jpeg',
+    link: 'https://www.yetiswap.app/',
+  },
+  pandaswap: {
+    title: 'pandaswap',
+    logo: 'pandaswap.jpeg',
+    link: 'https://www.pandaswap.info/',
+  },
+  sushi: {
+    title: 'sushi',
+    logo: 'sushi.jpeg',
+    link: 'https://sushi.com/',
+  },
+  olive: {
+    title: 'olive',
+    logo: 'olive.png',
+    link: 'https://avax.olive.cash/',
+  },
+  lydia: {
+    title: 'lydia',
+    logo: 'lydia.jpeg',
+    link: 'https://www.lydia.finance/',
+  },
+  baquette: {
+    title: 'baquette',
+    logo: 'baguette.jpeg',
+    link: 'https://baguette.exchange/',
+  },
+  canary: {
+    title: 'canary',
+    logo: 'canary.jpeg',
+    link: 'https://canary.exchange/',
+  },
+  traderjoe: {
+    title: 'traderjoe',
+    logo: 'traderjoe.jpeg',
+    link: 'https://traderjoexyz.com/',
+  },
+  'Yield Yak': {
+    title: 'yak',
+    logo: 'yak.png',
+    link: 'https://yieldyak.com/',
+  },
 };

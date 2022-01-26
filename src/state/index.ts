@@ -67,6 +67,7 @@ export const userBalanceStore: IUserBalanceStore = proxy({
 
 interface IAppSettings {
   visibility: {
+    chart: boolean;
     routing: boolean;
     exchanges: boolean;
   };
@@ -74,6 +75,7 @@ interface IAppSettings {
 
 export const appSettings: IAppSettings = proxy({
   visibility: {
+    chart: true,
     routing: true,
     exchanges: true,
   },

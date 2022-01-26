@@ -3,15 +3,33 @@ import { Head } from '~/components/shared/Head';
 import { appSettings, state, useSnapshot } from '~/state';
 import SwapChart from '../domain/chart/SwapChart';
 import SwapExchanges from '../domain/exchanges/SwapExchanges';
-import SwapRouting from '../domain/routing/SwapRouting';
+import SwapRouting from '../domain/routing/NewSwapRouting';
 // import { SwapCard } from '../domain/swap/SwapCard';
-import YakSwap from '../yak-swap';
-import { YIELD_YAK_PLATFORM } from '../yak-swap/utils/constants';
+import YakSwap from '@yak-spirit/yak-swap-ui';
+import { YIELD_YAK_PLATFORM } from '~/utils/constants';
+
+enum CurrencyType {
+  ETH = 'ETH',
+  DAI = 'DAI',
+  USDC = 'USDC',
+  USDT = 'USDT',
+}
+
+const fromCurrency = {
+  name: 'Ethereum',
+  type: CurrencyType.ETH,
+  value: 1,
+};
+const toCurrency = {
+  name: 'Dai Stablecoin',
+  type: CurrencyType.DAI,
+  value: 4106.89,
+};
 
 function Index() {
   const { visibility } = useSnapshot(appSettings);
 
-  const onlySwapVisible = !(visibility.exchanges || visibility.routing);
+  const onlySwapVisible = Object.values(visibility).every((v) => !v);
 
   const handleOfferReceive = ({ tokens, results }: any) => {
     console.log(tokens);
@@ -26,7 +44,7 @@ function Index() {
         tokenOut: tokens.tokenOut,
       };
     }
-    results.sort((dexA, dexB) => Number(dexB.amountOut) - Number(dexA.amountOut));
+    results.sort((dexA, dexB) => Number(dexB.formattedAmountOut) - Number(dexA.formattedAmountOut));
     state.swapInfo.exchanges = results;
     const yakOffer = results.find((v) => v.platform === YIELD_YAK_PLATFORM)?.yakOffer;
     state.swapInfo.routing.path = yakOffer.path;
@@ -52,12 +70,14 @@ function Index() {
           {/* <SwapCard /> */}
           <YakSwap onOfferReceive={handleOfferReceive} onQuotesLoading={handleQuotesLoading} />
         </div>
-        <div className="col-span-7 row-span-1">
-          <SwapChart />
-        </div>
+        {visibility.chart && (
+          <div className="col-span-7 row-span-1">
+            <SwapChart />
+          </div>
+        )}
         {visibility.routing && (
           <div className="col-span-7 row-span-1">
-            <SwapRouting />
+            <SwapRouting from={fromCurrency} to={toCurrency} />
           </div>
         )}
         {visibility.exchanges && (

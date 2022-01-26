@@ -1,3 +1,0 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Helmet } from 'react-helmet-async';
-export const Head = ({ title = 'Yak Spirit | Yield Yak DEX aggregator', description = 'Yield Yak DEX aggregator: find best swap route on Avalanche network', }) => (_jsxs(Helmet, { children: [_jsx("title", { children: `${title}` }, void 0), _jsx("meta", { name: "description", content: description }, void 0), _jsx("meta", { property: "og:title", content: `${title}` }, void 0), _jsx("meta", { property: "og:description", content: description }, void 0), _jsx("meta", { name: "robots", content: "noindex" }, void 0)] }, void 0));

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-export const formatTokenBalance = (balance?: string, decimals: string = '18') => {
+export const formatTokenBalance = (balance?: string, decimals: string | number = '18') => {
   if (!balance) {
     return null;
   }

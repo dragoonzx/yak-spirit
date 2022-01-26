@@ -3,7 +3,7 @@ import { useLocalStorage } from 'react-use';
 import { appSettings, useSnapshot } from '~/state';
 import { useEffect } from 'react';
 
-const blocks: ['routing', 'exchanges'] = ['routing', 'exchanges'];
+const blocks: ['chart', 'routing', 'exchanges'] = ['chart', 'routing', 'exchanges'];
 
 const AppSettings = () => {
   const snap = useSnapshot(appSettings);
@@ -17,7 +17,7 @@ const AppSettings = () => {
     appSettings.visibility = JSON.parse(blocksLS);
   }, []);
 
-  const handleVisibilityChange = (block: 'routing' | 'exchanges') => {
+  const handleVisibilityChange = (block: 'routing' | 'exchanges' | 'chart') => {
     appSettings.visibility = {
       ...appSettings.visibility,
       [block]: !appSettings.visibility[block],

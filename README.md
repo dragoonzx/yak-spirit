@@ -9,9 +9,10 @@
 
 - Multiple **themes** and **languages** support.
 - UI **customization**.
-- Automatic quotes **fetching** — always up-to-date quotes.
-- See arbitrage opportunities
-- Example of [Yak Swap UI component](https://github.com/dragoonzx/yak-swap-ui) usage — earn fees with reusable React component.
+- Automatic quotes **fetching** — always up-to-date quotes — fastest updates and trading experience.
+- Enables arbitrage trades (to/from the same asset)
+- Comparing prices against 1inch and ParaSwap (thanks for the idea @adrotitanique)
+- Example of [Yak Swap UI component](https://github.com/dragoonzx/yak-swap-ui) usage — earn fees with reusable React component
 - With community in mind — feel free to contribute!
 
 <p align="center">

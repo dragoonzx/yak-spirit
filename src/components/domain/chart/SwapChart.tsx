@@ -2,9 +2,8 @@ import { state, useSnapshot } from '~/state';
 import SpiritLoader from '~/components/shared/SpiritLoader';
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { useCallback, useEffect, useState } from 'react';
-import { COINGECKO_API, WAVAX } from '~/utils/constants';
+import { COINGECKO_API, WAVAX, ZERO_ADDRESS } from '~/utils/constants';
 import classNames from 'classnames';
-import { ZERO_ADDRESS } from '~/components/yak-swap/utils/constants';
 
 type PriceDataType = [number, number][];
 type TokenChartPriceData = {
@@ -261,7 +260,7 @@ const SwapChart = () => {
 
   // AVAX / USD = k1 YAK / USD = k2 => USD = YAK / k => AVAX / YAK = k1 / k2
   return (
-    <div className="card shadow-lg bg-base-200/100">
+    <div className="card shadow-lg bg-base-200/100 min-h-full">
       <div className="card-body">
         <h2 className="font-bold -mt-4 flex items-center" style={helperStyle}>
           <div className="dropdown">
@@ -301,7 +300,7 @@ const SwapChart = () => {
             )}
           </div>
           {errorFetching && (
-            <div data-tip="no data" className="tooltip tooltip-bottom ml-2">
+            <div data-tip="No data" className="tooltip tooltip-bottom ml-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4 text-error"

@@ -6,6 +6,7 @@ module.exports = {
     './src/**/*.tsx',
     './src/**/*.ts',
     './src/**/*.js',
+    './node_modules/@yak-spirit/yak-swap-ui/**/*.js',
   ],
   theme: {
     minWidth: {

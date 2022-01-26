@@ -9,6 +9,7 @@ import AppSettings from './AppSettings';
 import WalletInfoModal from './WalletInfoModal';
 import { getUserBalances } from '~/utils/getUserBalances';
 import { Link, useLocation } from 'react-router-dom';
+import { AVALANCHE_CHAIN_ID } from '~/utils/constants';
 
 function Header() {
   const location = useLocation();
