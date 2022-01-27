@@ -8,7 +8,10 @@ const blocks: ['chart', 'routing', 'exchanges'] = ['chart', 'routing', 'exchange
 const AppSettings = () => {
   const snap = useSnapshot(appSettings);
 
-  const [blocksLS, setBlocksLS] = useLocalStorage('blocks', JSON.stringify({ routing: true, exchanges: true }));
+  const [blocksLS, setBlocksLS] = useLocalStorage(
+    'blocks',
+    JSON.stringify({ chart: true, routing: true, exchanges: true })
+  );
 
   useEffect(() => {
     if (!blocksLS) {

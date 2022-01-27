@@ -15,7 +15,7 @@
       "name": "AVAX",
       "decimals": 18,
       "permitSupported": false,
-      "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png"
+      "logoURI": "https://raw.githubusercontent.com/BoggedFinance/Bogged-Token-List/main/avax/assets/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png"
     },
     {
       "chainId": 43114,
@@ -354,6 +354,14 @@
     },
     {
       "chainId": 43114,
+      "address": "0xd9D90f882CDdD6063959A9d837B05Cb748718A05",
+      "decimals": 18,
+      "name": "MORE",
+      "symbol": "MORE",
+      "logoURI": "https://storage.googleapis.com/yak/tokens/0xd9D90f882CDdD6063959A9d837B05Cb748718A05.png"
+    },
+    {
+      "chainId": 43114,
       "address": "0x65378b697853568dA9ff8EaB60C13E1Ee9f4a654",
       "decimals": 18,
       "name": "Husky Avalanche",
@@ -543,6 +551,70 @@
       "symbol": "SHIBX",
       "decimals": 18,
       "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x440aBbf18c54b2782A4917b80a1746d3A2c2Cce1/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0xB15f02F9Da8CD1f99E9dd375F21dc96D25ddd82C",
+      "decimals": 18,
+      "name": "HERMES",
+      "symbol": "HERMES",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xB15f02F9Da8CD1f99E9dd375F21dc96D25ddd82C/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0xfa4B6db72A650601E7Bd50a0A9f537c9E98311B2",
+      "decimals": 18,
+      "name": "HSHARE",
+      "symbol": "HSHARE",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xfa4B6db72A650601E7Bd50a0A9f537c9E98311B2/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0x721C299E6BF7D6a430d9bEA3364Ea197314bcE09",
+      "decimals": 18,
+      "name": "MilkyWay Token by SpaceSwap v2",
+      "symbol": "MILK2",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x721C299E6BF7D6a430d9bEA3364Ea197314bcE09/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0xC1d02E488a9Ce2481BFdcd797d5373Dd2E70a9C2",
+      "decimals": 18,
+      "name": "SHAKE token by SpaceSwap v2",
+      "symbol": "SHAKE",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xC1d02E488a9Ce2481BFdcd797d5373Dd2E70a9C2/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0x3B55E45fD6bd7d4724F5c47E0d1bCaEdd059263e",
+      "decimals": 18,
+      "name": "Mai",
+      "symbol": "MIMATIC",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x3B55E45fD6bd7d4724F5c47E0d1bCaEdd059263e/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0x026187BdbC6b751003517bcb30Ac7817D5B766f8",
+      "decimals": 18,
+      "name": "Defrost Finance H2O",
+      "symbol": "H2O",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x026187BdbC6b751003517bcb30Ac7817D5B766f8/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0xbca7f1998Dc9FFB70b086543a808960a460aBcA7",
+      "decimals": 18,
+      "name": "Kitty Token",
+      "symbol": "KITTY",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xbca7f1998Dc9FFB70b086543a808960a460aBcA7/logo.png"
+    },
+    {
+      "chainId": 43114,
+      "address": "0xF2CfC11093edB5A2DC7F49e70A3a3a9cd4F4FeE4",
+      "decimals": 18,
+      "name": "Brig Finance Token",
+      "symbol": "BRIG",
+      "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xF2CfC11093edB5A2DC7F49e70A3a3a9cd4F4FeE4/logo.png"
     },
     {
       "address": "0x9eF758aC000a354479e538B8b2f01b917b8e89e7",
