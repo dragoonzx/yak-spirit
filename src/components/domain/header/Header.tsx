@@ -48,7 +48,7 @@ function Header() {
             </Link>
           </div>
           <div>
-            <div className="flex-none lg:flex text-secondary">
+            <div className="flex-none lg:flex text-base-content">
               <div className="flex items-stretch">
                 <div className="mr-1">
                   <Theming />
@@ -102,7 +102,7 @@ function Header() {
               </div>
             </div>
             {isAppPage && (
-              <div className="flex-none ml-2 text-secondary">
+              <div className="flex-none ml-2 text-base-content">
                 <AppSettings />
               </div>
             )}

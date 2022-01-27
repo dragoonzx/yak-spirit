@@ -2,7 +2,7 @@ import spiritLogo from '~/assets/images/yak-spirit/yak-favicon.png';
 
 const Footer = () => {
   return (
-    <footer className="p-4 footer text-secondary flex-1 items-end">
+    <footer className="p-4 footer text-base-content flex-1 items-end">
       <div className="items-center grid-flow-col">
         <img src={spiritLogo} width="36" height="36" />
         <p>
@@ -11,12 +11,12 @@ const Footer = () => {
             target="_blank"
             rel="noreferrer"
             href="https://moralis.io/avalanche-hackathon"
-            className="link link-secondary"
+            className="link link-primary"
           >
             Moralis Avalanche Hackathon
           </a>{' '}
           on top of{' '}
-          <a className="link link-secondary" target="_blank" rel="noreferrer" href="https://yieldyak.com/">
+          <a className="link link-primary" target="_blank" rel="noreferrer" href="https://yieldyak.com/">
             Yield Yak
           </a>
         </p>

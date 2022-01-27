@@ -137,7 +137,7 @@ const SwapExchanges = () => {
                                 'p-1 w-16 text-center text-sm rounded mx-auto',
                                 bestOffer.formattedAmountOut === exchange.formattedAmountOut
                                   ? 'bg-primary text-primary-content'
-                                  : 'bg-error text-neutral'
+                                  : 'bg-secondary/50 text-secondary-content'
                               )}
                             >
                               {bestOffer.formattedAmountOut === exchange.formattedAmountOut

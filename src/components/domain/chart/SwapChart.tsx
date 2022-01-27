@@ -25,7 +25,7 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
 
     return (
       <div className="rounded px-2 bg-primary">
-        <p className="label">{name}</p>
+        <p className="label text-primary-content text-xs">{name}</p>
       </div>
     );
   }
@@ -260,7 +260,7 @@ const SwapChart = () => {
 
   // AVAX / USD = k1 YAK / USD = k2 => USD = YAK / k => AVAX / YAK = k1 / k2
   return (
-    <div className="card shadow-lg bg-base-200/100 min-h-full">
+    <div className="card shadow-lg bg-base-200/100 min-h-full" style={errorFetching ? { height: '300px' } : {}}>
       <div className="card-body">
         <h2 className="font-bold -mt-4 flex items-center" style={helperStyle}>
           <div className="dropdown">

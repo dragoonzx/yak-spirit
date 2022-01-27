@@ -58,12 +58,15 @@ const WalletInfoModal = ({ isOpen, setIsOpen, logout }: IWalletInfoModalProps) =
                 Account
               </Dialog.Title>
               <div className="text-gray-500">
-                <p className="mb-2">Balance: {formatTokenBalance(balance.native, '18')} AVAX</p>
-                <span className="font-bold">ERC-20 Tokens</span>
+                <p className="mb-2 mt-2">
+                  <span className="font-bold">Balance:</span> {formatTokenBalance(balance.native, '18')} AVAX
+                </p>
+                <span className="text-lg mb-2 leading-6 text-gray-900">ERC-20 Tokens</span>
                 {balance.tokens.length !== 0 ? (
-                  balance.tokens.map((token) => (
-                    <p key={token.symbol}>
-                      {token.name} balance: {formatTokenBalance(token.balance, token.decimals)} {token.symbol}
+                  balance.tokens.map((token, index) => (
+                    <p key={token.symbol + index}>
+                      <span className="font-bold">{token.name}</span>{' '}
+                      {formatTokenBalance(token.balance, token.decimals)} {token.symbol}
                     </p>
                   ))
                 ) : (
