@@ -14,6 +14,9 @@ const switchNetworkAvalanche = async () => {
   const web3 = new Web3(window.ethereum);
 
   try {
+    if (!web3?.currentProvider) {
+      return;
+    }
     // @ts-expect-error: request on string
     await web3.currentProvider!.request({
       method: 'wallet_switchEthereumChain',

@@ -109,12 +109,12 @@ const SwapChart = () => {
       const formattedData = formattedPrices[0].map((price, i) => {
         return {
           name: price.name,
-          uv: price.uv / formattedPrices[1][i].uv,
+          uv: price?.uv / (formattedPrices[1][i]?.uv ?? 1),
         };
       });
 
       setFormattedData(formattedData);
-      setCurPrice(formattedData[formattedData.length - 1].uv);
+      setCurPrice(formattedData[formattedData.length - 1]?.uv);
     } catch (err) {
       console.error(err);
       setErrorFetching(true);
@@ -139,7 +139,7 @@ const SwapChart = () => {
       return;
     }
 
-    const percents = (formattedData[formattedData.length - 1].uv * 100) / formattedData[0].uv - 100;
+    const percents = (formattedData[formattedData.length - 1]?.uv * 100) / formattedData[0]?.uv - 100;
     setDiffPercent(Number(percents.toFixed(2)));
   }, [formattedData]);
 
@@ -176,38 +176,38 @@ const SwapChart = () => {
     const formattedData = pricesData.tokenIn.map((price, i) => {
       return {
         name: price.name,
-        uv: price.uv / pricesData.tokenOut[i].uv,
+        uv: price?.uv / (pricesData.tokenOut[i]?.uv ?? 1),
       };
     });
 
     setFormattedData(formattedData);
-    setCurPrice(formattedData[formattedData.length - 1].uv);
+    setCurPrice(formattedData[formattedData.length - 1]?.uv);
   };
 
   const setReversedFormattedData = () => {
     const formattedData = pricesData.tokenOut.map((price, i) => {
       return {
         name: price.name,
-        uv: price.uv / pricesData.tokenIn[i].uv,
+        uv: price?.uv / (pricesData.tokenIn[i]?.uv ?? 1),
       };
     });
 
     setFormattedData(formattedData);
-    setCurPrice(formattedData[formattedData.length - 1].uv);
+    setCurPrice(formattedData[formattedData.length - 1]?.uv);
   };
 
   const setTokenInToUsdFormattedData = () => {
     const formattedData = pricesData.tokenIn;
 
     setFormattedData(formattedData);
-    setCurPrice(formattedData[formattedData.length - 1].uv);
+    setCurPrice(formattedData[formattedData.length - 1]?.uv);
   };
 
   const setTokenOutToUsdFormattedData = () => {
     const formattedData = pricesData.tokenOut;
 
     setFormattedData(formattedData);
-    setCurPrice(formattedData[formattedData.length - 1].uv);
+    setCurPrice(formattedData[formattedData.length - 1]?.uv);
   };
 
   useEffect(() => {

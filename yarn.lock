@@ -2198,10 +2198,10 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@yak-spirit/yak-swap-ui@0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@yak-spirit/yak-swap-ui/-/yak-swap-ui-0.0.7.tgz#2d40456b2dad7801186f977c1b18ddd548160407"
-  integrity sha512-d6GduiMSPYd4KzMMiUhobJRMi7q8mKsG8FNcJKYxeXsf75FLrqaS0BrkuccPhvAfm4oedmwWLwchnW09lyvQoA==
+"@yak-spirit/yak-swap-ui@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@yak-spirit/yak-swap-ui/-/yak-swap-ui-0.0.8.tgz#01fa2291b03521e14f7924e6ddaf375987d5e121"
+  integrity sha512-+lZ9zgUIyuy7TC9+4w21e9wurNdV0s9b1pGH1An54L4waGQzQLUTvIYXi0JLgHRCmEwreSawnPJelqfM7kWsKg==
   dependencies:
     Base64 "^0.2.1"
     accepts "^1.3.7"
