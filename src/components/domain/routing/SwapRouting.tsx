@@ -1,8 +1,11 @@
+import React, { Fragment } from 'react';
+import { Icon } from './Icon';
+import clsx from 'classnames';
 import { state, useSnapshot } from '~/state';
+import { formatTokenBalance } from '~/utils/formatters';
 import { tokenList } from '~/components/domain/swap/tokenList';
 import { ADDRESSES } from '~/utils/constants';
-import { Fragment, useEffect } from 'react';
-import SpiritLoader from '~/components/shared/SpiritLoader';
+import SpiritLoaderWithTransition from '~/components/shared/SpiritLoaderWithTransition';
 
 const helperStyle = {
   height: '37px',
@@ -10,72 +13,86 @@ const helperStyle = {
   alignItems: 'center',
 };
 
-const SwapRouting = () => {
+const Border: React.FC<{ start?: boolean; end?: boolean }> = ({ start, end }) => {
+  return (
+    <div
+      className={clsx(
+        (start || end) && 'pt-14',
+        start && 'border-l rounded-bl-3xl',
+        end && 'border-r  rounded-br-3xl',
+        'border-dashed border-b border-[#C5C6E1] grow'
+      )}
+    />
+  );
+};
+
+const Routing: React.FC = () => {
   const {
     swapInfo: {
-      routing: { path, adapters },
+      routing: { path, amounts },
+      tokens: { tokenIn, tokenOut },
     },
     loadingQuotes,
   } = useSnapshot(state);
 
-  // adapters - Yak smart contracts
-  // amounts - what i receive/have on every step
-  // path - tokens in path
-  // const path = state.swapInfo.routing?.path;
-  // const adapters = state.swapInfo.routing?.adapters as unknown as (keyof typeof ADDRESSES['adapters'])[];
-  // const [path, setPath] = useState()
-  // const [adapters, setAdapters] = useState()
-
-  const renderPath = () => {
-    return (
-      path.length !== 0 &&
-      path.map((token, index) => (
-        <Fragment key={token + index}>
-          <div className="flex flex-none items-center mr-6 relative">
-            <img className="h-10 mr-6 rounded" src={tokenList.find((v) => v.address === token)?.logoURI} alt="" />
-            {index !== path.length - 1 && (
-              <div className="relative">
-                <div className="flex absolute left-1/2 -translate-x-1/2 bottom-full mb-2 items-center mr-4">
-                  <div className="flex flex-col items-center">
-                    <span className="flex items-center rounded bg-base-content/20 btn-xs">
-                      {tokenList.find((v) => v.address === path[index + 1])?.symbol}
-                    </span>
-                    <div className="text-sm capitalize">
-                      {
-                        ADDRESSES.adapters[(adapters as unknown as (keyof typeof ADDRESSES['adapters'])[])[index]]
-                          ?.platform
-                      }
-                    </div>
-                  </div>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            )}
-          </div>
-        </Fragment>
-      ))
-    );
+  const getAdapterPlatform = (index: number) => {
+    return ADDRESSES.adapters[
+      (state.swapInfo.routing.adapters as unknown as (keyof typeof ADDRESSES['adapters'])[])[index]
+    ]?.platform;
   };
 
   return (
-    <div className="card shadow-lg bg-base-200/100">
+    <div className="card shadow-lg bg-base-200/100 min-h-full">
       <div className="card-body">
         <h2 className="font-bold -mt-4" style={helperStyle}>
           Routing
-          {loadingQuotes && <SpiritLoader size="small" className="-mt-2" />}
+          <SpiritLoaderWithTransition visible={loadingQuotes} />
         </h2>
-        <div className="flex items-end h-24 overflow-x-auto mt-2">{renderPath()}</div>
+        <div className="flex justify-between mt-1">
+          <div className="flex items-center">
+            <Icon url={tokenList.find((v) => v.address === path[0])?.logoURI!} />
+            <div className="ml-2 text-sm">
+              {Number(formatTokenBalance(amounts[0], tokenIn.decimals)).toLocaleString()}
+            </div>
+          </div>
+          <div className="flex items-center">
+            {/* <div className="mr-2">{formatNumber(to.value, 2, ' ')}</div> */}
+            <div className="mr-2 text-sm">
+              {Number(formatTokenBalance(amounts[amounts.length - 1], tokenOut.decimals)).toLocaleString()}
+            </div>
+            <Icon url={tokenList.find((v) => v.address === path[path.length - 1])?.logoURI!} />
+          </div>
+        </div>
+        <div className="mx-4">
+          {/* {path.map((token, index) => {
+            return ( */}
+          <div className="flex items-end justify-around">
+            <Border start />
+            <div className="text-[#9495C8] text-xs translate-y-1/2 mx-1.5">100%</div>
+            <Border />
+            {path.slice(1, path.length - 1).map((token, index) => {
+              return (
+                <Fragment key={token + index}>
+                  <Icon
+                    className="translate-y-1/2 mx-1"
+                    url={tokenList.find((v) => v.address === token)?.logoURI!}
+                    type={tokenList.find((v) => v.address === token)?.symbol!}
+                    dex={getAdapterPlatform(index + 1)}
+                    withType
+                  />
+                  <Border />
+                </Fragment>
+              );
+            })}
+            <div className="text-[#9495C8] text-xs translate-y-1/2  mx-1.5">100%</div>
+            <Border end />
+          </div>
+          {/* ); */}
+          {/* })} */}
+        </div>
       </div>
     </div>
   );
 };
 
-export default SwapRouting;
+export default Routing;

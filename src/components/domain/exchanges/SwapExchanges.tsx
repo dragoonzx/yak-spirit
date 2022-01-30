@@ -5,6 +5,7 @@ import SpiritLoader from '~/components/shared/SpiritLoader';
 import { state, useSnapshot } from '~/state';
 import { DEXES } from '~/utils/constants';
 import { get1inchQuotes, getParaswapQuotes } from '~/utils/getAggregatorsQuotes';
+import SpiritLoaderWithTransition from '~/components/shared/SpiritLoaderWithTransition';
 
 const helperStyle = {
   height: '37px',
@@ -90,7 +91,8 @@ const SwapExchanges = () => {
         <h2 className="font-bold -mt-4" style={helperStyle}>
           Exchanges
           {/* {snap.swapInfo.exchanges.length === 0 ? <SpiritLoader size="small" /> : null} */}
-          {(snap.loadingQuotes || loadingAggregators) && <SpiritLoader size="small" className="-mt-2" />}
+          <SpiritLoaderWithTransition visible={snap.loadingQuotes || loadingAggregators} />
+          {/* {(snap.loadingQuotes || loadingAggregators) && <SpiritLoader size="small" className="-mt-2" />} */}
         </h2>
         <div className="overflow-x-auto">
           {snap.swapInfo.exchanges.length !== 0 && (

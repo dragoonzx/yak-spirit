@@ -2,25 +2,6 @@ import React from 'react';
 import clsx from 'classnames';
 import { DEXES } from '~/utils/constants';
 
-const iconsParams = {
-  ETH: {
-    url: '/icons/eth.svg',
-    background: '#6768AB',
-  },
-  DAI: {
-    url: '/icons/dai.svg',
-    background: '#F9A606',
-  },
-  USDC: {
-    url: '/icons/usdc.svg',
-    background: '#2775CA',
-  },
-  USDT: {
-    url: '/icons/usdt.svg',
-    background: '#50AF95',
-  },
-};
-
 interface Props {
   className?: string;
   withType?: boolean;

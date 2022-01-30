@@ -4,6 +4,7 @@ import { XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'rec
 import { useCallback, useEffect, useState } from 'react';
 import { COINGECKO_API, WAVAX, ZERO_ADDRESS } from '~/utils/constants';
 import classNames from 'classnames';
+import SpiritLoaderWithTransition from '~/components/shared/SpiritLoaderWithTransition';
 
 type PriceDataType = [number, number][];
 type TokenChartPriceData = {
@@ -317,7 +318,7 @@ const SwapChart = () => {
               </svg>
             </div>
           )}
-          {loadingQuotes && <SpiritLoader size="small" className="-mt-2" />}
+          <SpiritLoaderWithTransition visible={loadingQuotes} />
         </h2>
         <div className={classNames('duration-300 transition-all', errorFetching ? 'h-0 opacity-0' : 'h-52 opacity-1')}>
           {!!formattedData.length && (

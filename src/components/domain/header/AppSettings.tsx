@@ -78,8 +78,13 @@ const AppSettings = () => {
           <div className="collapse-content text-sm">
             <p>
               Learn more about contributions to Yak Spirit on{' '}
-              <a className="link link-primary" href="github.com/dragoonzx/yak-spirit" target="_blank">
-                twitter
+              <a
+                className="link link-primary"
+                href="https://github.com/dragoonzx/yak-spirit"
+                rel="noreferrer"
+                target="_blank"
+              >
+                github
               </a>
             </p>
           </div>

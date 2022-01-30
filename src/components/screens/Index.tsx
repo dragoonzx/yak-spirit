@@ -3,28 +3,10 @@ import { Head } from '~/components/shared/Head';
 import { appSettings, state, useSnapshot } from '~/state';
 import SwapChart from '../domain/chart/SwapChart';
 import SwapExchanges from '../domain/exchanges/SwapExchanges';
-import SwapRouting from '../domain/routing/NewSwapRouting';
+import SwapRouting from '../domain/routing/SwapRouting';
 // import { SwapCard } from '../domain/swap/SwapCard';
 import YakSwap from '@yak-spirit/yak-swap-ui';
 import { YIELD_YAK_PLATFORM } from '~/utils/constants';
-
-enum CurrencyType {
-  ETH = 'ETH',
-  DAI = 'DAI',
-  USDC = 'USDC',
-  USDT = 'USDT',
-}
-
-const fromCurrency = {
-  name: 'Ethereum',
-  type: CurrencyType.ETH,
-  value: 1,
-};
-const toCurrency = {
-  name: 'Dai Stablecoin',
-  type: CurrencyType.DAI,
-  value: 4106.89,
-};
 
 function Index() {
   const { visibility } = useSnapshot(appSettings);
@@ -77,7 +59,7 @@ function Index() {
         )}
         {visibility.routing && (
           <div className="col-span-7 row-span-1">
-            <SwapRouting from={fromCurrency} to={toCurrency} />
+            <SwapRouting />
           </div>
         )}
         {visibility.exchanges && (

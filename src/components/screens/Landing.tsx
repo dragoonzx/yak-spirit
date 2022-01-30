@@ -29,7 +29,8 @@ function Landing() {
             Yak Spirit is built to give users <span className="font-bold text-primary">a better UX</span> of token swap
             on the avalanche network. We rest on the shoulders of Yield Yak Swap, which finds{' '}
             <span className="text-primary font-bold">the best offer among all DEX`es</span>, and Yak Spirit enhance it
-            with price chart and multi-path. Search the best price, lower price slippage, execute with one click!
+            with price chart and comparison with other aggregators. Search the best price, lower price slippage, execute
+            with one click!
           </p>
           <Link to="/app">
             <button className="btn btn-primary">Lets swap</button>
