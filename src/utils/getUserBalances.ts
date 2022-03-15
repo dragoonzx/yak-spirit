@@ -13,7 +13,6 @@ export const getUserBalances = async () => {
       Moralis.Web3API.account.getTokenBalances(options),
       Moralis.Web3API.account.getNativeBalance(options),
     ]);
-    console.log(tokenBalances);
     userBalanceStore.tokens = tokenBalances[0];
     userBalanceStore.native = tokenBalances[1].balance;
   } catch (err) {

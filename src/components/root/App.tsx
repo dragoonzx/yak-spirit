@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 
 import enTranslation from '~/locales/en/index.json';
 import ruTranslation from '~/locales/ru/index.json';
+import zhTranslation from '~/locales/zh/index.json';
 import { Router } from '../router/Router';
 
 i18n.use(initReactI18next).init({
@@ -13,6 +14,9 @@ i18n.use(initReactI18next).init({
     },
     ru: {
       translation: ruTranslation,
+    },
+    zh: {
+      translation: zhTranslation,
     },
   },
   lng: 'en',

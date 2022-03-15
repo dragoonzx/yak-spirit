@@ -5,7 +5,7 @@ import SwapChart from '../domain/chart/SwapChart';
 import SwapExchanges from '../domain/exchanges/SwapExchanges';
 import SwapRouting from '../domain/routing/SwapRouting';
 // import { SwapCard } from '../domain/swap/SwapCard';
-import YakSwap from '@yak-spirit/yak-swap-ui';
+import YakSwap from '~/components/domain/swap';
 import { YIELD_YAK_PLATFORM } from '~/utils/constants';
 
 function Index() {
@@ -14,7 +14,6 @@ function Index() {
   const onlySwapVisible = Object.values(visibility).every((v) => !v);
 
   const handleOfferReceive = ({ tokens, results }: any) => {
-    console.log(tokens);
     if (
       !(
         tokens.tokenIn.address === state.swapInfo.tokens.tokenIn?.address &&
@@ -44,21 +43,24 @@ function Index() {
       <Head />
       <div
         className={classNames(
-          'mt-4 p-4 rounded-box',
+          'mt-4 sm:p-4 rounded-box',
           onlySwapVisible ? 'flex justify-center' : 'lg:grid grid-cols-12 gap-6'
         )}
       >
-        <div className="col-span-5 row-span-3" style={{ gridRowStart: 1, gridRowEnd: 3 }}>
+        <div
+          className={classNames('col-span-5 mb-2 sm:mb-2 row-span-3', onlySwapVisible ? 'min-w-[400px]' : '')}
+          style={{ gridRowStart: 1, gridRowEnd: 3 }}
+        >
           {/* <SwapCard /> */}
           <YakSwap onOfferReceive={handleOfferReceive} onQuotesLoading={handleQuotesLoading} />
         </div>
         {visibility.chart && (
-          <div className="col-span-7 row-span-1">
+          <div className="col-span-7 mb-2 sm:mb-2 row-span-1">
             <SwapChart />
           </div>
         )}
         {visibility.routing && (
-          <div className="col-span-7 row-span-1">
+          <div className="col-span-7 mb-2 sm:mb-2 row-span-1">
             <SwapRouting />
           </div>
         )}

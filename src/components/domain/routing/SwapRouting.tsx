@@ -3,9 +3,10 @@ import { Icon } from './Icon';
 import clsx from 'classnames';
 import { state, useSnapshot } from '~/state';
 import { formatTokenBalance } from '~/utils/formatters';
-import { tokenList } from '~/components/domain/swap/tokenList';
+import { tokenList } from '~/api/tokenList';
 import { ADDRESSES } from '~/utils/constants';
 import SpiritLoaderWithTransition from '~/components/shared/SpiritLoaderWithTransition';
+import { useTranslation } from 'react-i18next';
 
 const helperStyle = {
   height: '37px',
@@ -27,6 +28,7 @@ const Border: React.FC<{ start?: boolean; end?: boolean }> = ({ start, end }) =>
 };
 
 const Routing: React.FC = () => {
+  const { t } = useTranslation();
   const {
     swapInfo: {
       routing: { path, amounts },
@@ -45,7 +47,7 @@ const Routing: React.FC = () => {
     <div className="card shadow-lg bg-base-200/100 min-h-full">
       <div className="card-body">
         <h2 className="font-bold -mt-4" style={helperStyle}>
-          Routing
+          Yak {t('routing')}
           <SpiritLoaderWithTransition visible={loadingQuotes} />
         </h2>
         <div className="flex justify-between mt-1">

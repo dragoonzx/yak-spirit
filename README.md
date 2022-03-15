@@ -7,13 +7,13 @@
 
 > Interface for Yield Yak Swap
 
-- Multiple **themes** and **languages** support
-- UI **customization**
+- UI **customization** and **languages** support
 - Automatic quotes **fetching** — always up-to-date quotes — fastest updates and trading experience
 - Enables arbitrage trades (to/from the same asset)
 - Comparing prices against 1inch and ParaSwap (thanks for the idea @adrotitanique)
-- Example of [Yak Swap UI component](https://github.com/dragoonzx/yak-swap-ui) usage — earn fees with reusable React component
 - With community in mind — feel free to contribute!
+
+[Yak Swap UI component](https://github.com/dragoonzx/yak-swap-ui) — reusable React component
 
 <p align="center">
   <img src="./src/assets/images/yak-spirit/yak-spirit5.png" alt="Yak Spirit logo" width="450">

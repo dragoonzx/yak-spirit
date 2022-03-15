@@ -57,7 +57,7 @@ export const getParaswapQuotes = async ({
     toTokenAmount: quotes?.priceRoute?.destAmount ?? 0,
     toToken: { decimals: quotes?.priceRoute?.destDecimals ?? 18 },
     logo: 'paraswap.png',
-    platform: 'Paraswap',
+    platform: 'paraswap',
     link: 'https://paraswap.io/#/?network=avalanche',
   };
 };

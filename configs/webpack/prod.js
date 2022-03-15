@@ -1,6 +1,7 @@
 // production config
 const { merge } = require('webpack-merge');
 const { resolve } = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const commonConfig = require('./common');
 
@@ -14,6 +15,6 @@ module.exports = (env) => {
       publicPath: '/',
     },
     devtool: 'source-map',
-    plugins: [],
+    plugins: [new BundleAnalyzerPlugin()],
   });
 };

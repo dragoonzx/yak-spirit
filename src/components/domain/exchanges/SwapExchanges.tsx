@@ -1,11 +1,11 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber, ethers } from 'ethers';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import SpiritLoader from '~/components/shared/SpiritLoader';
-import { state, useSnapshot } from '~/state';
+import { state, swapOfferState, useSnapshot } from '~/state';
 import { DEXES } from '~/utils/constants';
 import { get1inchQuotes, getParaswapQuotes } from '~/utils/getAggregatorsQuotes';
 import SpiritLoaderWithTransition from '~/components/shared/SpiritLoaderWithTransition';
+import { useTranslation } from 'react-i18next';
 
 const helperStyle = {
   height: '37px',
@@ -14,6 +14,7 @@ const helperStyle = {
 };
 
 const SwapExchanges = () => {
+  const { t } = useTranslation();
   const snap = useSnapshot(state);
 
   const [aggregators, setAggregators] = useState<any[]>([]);
@@ -21,7 +22,6 @@ const SwapExchanges = () => {
   const [loadingAggregators, setLoadingAggregators] = useState(false);
 
   useEffect(() => {
-    console.log('tokens', state.swapInfo.tokens);
     const getAdditionalQuotes = async () => {
       try {
         setLoadingAggregators(true);
@@ -40,7 +40,6 @@ const SwapExchanges = () => {
           }),
         ]);
 
-        console.log(additionalQuotes);
         if (!additionalQuotes.length) {
           setAggregators([]);
           setLoadingAggregators(false);
@@ -53,16 +52,18 @@ const SwapExchanges = () => {
             logo: quote.logo,
             link: quote.link,
             amountOut: quote.toTokenAmount,
-            formattedAmountOut: !new BigNumber(quote.toTokenAmount).isZero()
+            formattedAmountOut: !BigNumber.from(quote.toTokenAmount).isZero()
               ? // TODO: check small numbers
-                new BigNumber(quote.toTokenAmount).div(new BigNumber(10).pow(quote.toToken?.decimals)).toFixed(8)
+                ethers.utils.formatUnits(BigNumber.from(quote.toTokenAmount), quote.toToken?.decimals).slice(0, 10)
               : 0,
             aggregator: true,
+            origin: quote,
           };
         });
         setAggregators(aggregatorQuotes);
       } catch (err) {
         console.error(err);
+        setAggregators([]);
       } finally {
         setLoadingAggregators(false);
       }
@@ -80,16 +81,35 @@ const SwapExchanges = () => {
     }
 
     const exchangesUnion = [...state.swapInfo.exchanges, ...aggregators];
-    exchangesUnion.sort((dexA, dexB) => Number(dexB.formattedAmountOut) - Number(dexA.formattedAmountOut));
+    exchangesUnion.sort(
+      (dexA, dexB) =>
+        Number(dexB.formattedAmountOut) -
+        Number(dexA.formattedAmountOut) +
+        Number(dexB.platform === 'Yield Yak') / 10000 -
+        Number(dexA.platform === 'Yield Yak') / 10000
+    );
 
     setExchanges(exchangesUnion);
+
+    if (!exchangesUnion?.length) {
+      return;
+    }
+
+    const platform = exchangesUnion[0].platform;
+    swapOfferState.type = platform;
+
+    if (platform === 'Yield Yak') {
+      swapOfferState.externalOffer = null;
+    } else {
+      swapOfferState.externalOffer = exchangesUnion[0];
+    }
   }, [state.swapInfo.exchanges, aggregators]);
 
   return (
     <div className="card shadow-lg bg-base-200/100 min-h-full">
       <div className="card-body">
         <h2 className="font-bold -mt-4" style={helperStyle}>
-          Exchanges
+          {t('exchanges')}
           {/* {snap.swapInfo.exchanges.length === 0 ? <SpiritLoader size="small" /> : null} */}
           <SpiritLoaderWithTransition visible={snap.loadingQuotes || loadingAggregators} />
           {/* {(snap.loadingQuotes || loadingAggregators) && <SpiritLoader size="small" className="-mt-2" />} */}
@@ -100,8 +120,8 @@ const SwapExchanges = () => {
               <thead className="text-center">
                 <tr>
                   <th className="text-left">DEX/Aggregator</th>
-                  <th>Receive</th>
-                  <th>Diff</th>
+                  <th>{t('receive')}</th>
+                  <th>{t('diff')}</th>
                 </tr>
               </thead>
               <tbody className="text-center">
@@ -159,17 +179,6 @@ const SwapExchanges = () => {
             </table>
           )}
         </div>
-        {/* {snap.swapInfo.exchanges.length !== 0 ? (
-          <div className="flex justify-center btn-group mt-4">
-            <button className="btn">Previous</button>
-            <button className="btn">1</button>
-            <button className="btn btn-active">2</button>
-            <button className="btn btn-disabled">...</button>
-            <button className="btn">3</button>
-            <button className="btn">4</button>
-            <button className="btn">Next</button>
-          </div>
-        ) : null} */}
       </div>
     </div>
   );

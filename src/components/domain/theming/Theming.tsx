@@ -5,21 +5,21 @@ import SpiritMenu from '~/components/shared/SpiritMenu';
 
 const themes = [
   {
-    title: '🌲  forest',
+    title: 'forest',
     theme: 'forest',
+    color: '#3CE17D',
   },
-  { title: '🌚  dark', theme: 'dark' },
-  { title: '🌝  light', theme: 'light' },
-  { title: '🐝  bumblebee', theme: 'bumblebee' },
-  { title: '✳️  Emerald', theme: 'emerald' },
-  { title: '🌃  synthwave', theme: 'synthwave' },
-  { title: '👴  retro', theme: 'retro' },
-  { title: '🌸  valentine', theme: 'valentine' },
-  { title: '👓  lofi', theme: 'lofi' },
-  { title: '🖍  pastel', theme: 'pastel' },
-  { title: '📝  Wireframe', theme: 'wireframe' },
-  { title: '💎  luxury', theme: 'luxury' },
-  { title: '🧛‍♂️  dracula', theme: 'dracula' },
+  { title: 'dark', theme: 'dark', color: 'hsl(259 94% 61%)' },
+  { title: 'light', theme: 'light', color: 'hsl(259 94.4% 51.2%)' },
+  { title: 'bumblebee', theme: 'bumblebee', color: 'hsl(50 94.4% 58%)' },
+  { title: 'Emerald', theme: 'emerald', color: 'hsl(141 50% 60%)' },
+  { title: 'synthwave', theme: 'synthwave', color: 'hsl(321 69.6% 69%)' },
+  { title: 'valentine', theme: 'valentine', color: 'hsl(353 73.8% 67.1%)' },
+  { title: 'lofi', theme: 'lofi', color: 'hsl(0 0% 50.2%)' },
+  { title: 'pastel', theme: 'pastel', color: 'hsl(284 21.6% 80%)' },
+  { title: 'Wireframe', theme: 'wireframe', color: 'hsl(0 0% 72.2%)' },
+  { title: 'luxury', theme: 'luxury', color: '#dca54b' },
+  { title: 'dracula', theme: 'dracula', color: 'hsl(330 100% 85.1%)' },
 ];
 
 const Theming = () => {
@@ -65,15 +65,16 @@ const Theming = () => {
 
   const menuItems = (
     <div className="px-1 py-1 ">
-      {themes.map(({ theme, title }) => (
+      {themes.map(({ theme, title, color }) => (
         <Menu.Item key={theme}>
           {() => (
             <button
               onClick={() => setTheme(theme)}
               className={`${
                 themeLS === theme ? 'bg-success/10 text-base-content' : 'text-base-content hover:btn-primary'
-              } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+              } group flex rounded-md items-center w-full px-2 py-2 text-sm capitalize`}
             >
+              <span className="h-2 w-2  rounded-full mr-2" style={{ backgroundColor: color }} />
               {title}
             </button>
           )}

@@ -118,6 +118,7 @@ const SwapChart = () => {
     } catch (err) {
       console.error(err);
       setErrorFetching(true);
+      setFormattedData([]);
     }
   };
 
@@ -240,7 +241,6 @@ const SwapChart = () => {
       <ResponsiveContainer>
         <AreaChart
           data={formattedData}
-          height={150}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
@@ -251,7 +251,7 @@ const SwapChart = () => {
               <stop offset="95%" stopColor="#09162E" stopOpacity="0.1" />
             </linearGradient>
           </defs>
-          <YAxis hide type="number" domain={['dataMin', 'dataMax']} />
+          <YAxis hide type="number" domain={['auto', 'auto']} />
           <Tooltip content={(props) => <CustomTooltip {...props} />} />
           <Area type="natural" dataKey="uv" stroke="#42de81" fill="url(#colorUv)" />
         </AreaChart>
@@ -261,7 +261,7 @@ const SwapChart = () => {
 
   // AVAX / USD = k1 YAK / USD = k2 => USD = YAK / k => AVAX / YAK = k1 / k2
   return (
-    <div className="card shadow-lg bg-base-200/100 min-h-full" style={errorFetching ? { height: '300px' } : {}}>
+    <div className="card shadow-lg bg-base-200/100 min-h-full h-[300px]">
       <div className="card-body">
         <h2 className="font-bold -mt-4 flex items-center" style={helperStyle}>
           <div className="dropdown">
@@ -320,7 +320,7 @@ const SwapChart = () => {
           )}
           <SpiritLoaderWithTransition visible={loadingQuotes} />
         </h2>
-        <div className={classNames('duration-300 transition-all', errorFetching ? 'h-0 opacity-0' : 'h-52 opacity-1')}>
+        <div className={classNames('duration-300 transition-all', errorFetching ? 'opacity-0' : 'opacity-1')}>
           {!!formattedData.length && (
             <div className="mt-2 flex items-center">
               <p className="font-bold text-xl">{curPrice}</p>
@@ -329,7 +329,7 @@ const SwapChart = () => {
               </span>
             </div>
           )}
-          <div className="flex items-end overflow-x-auto mt-2" style={{ width: '100%', height: 150 }}>
+          <div className="overflow-x-auto mt-2" style={{ width: '100%', height: 200 }}>
             {renderLineChart()}
           </div>
         </div>

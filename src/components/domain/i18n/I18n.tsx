@@ -15,22 +15,23 @@ const languages = [
   },
   {
     title: '🇨🇳 简体中文',
-    language: 'cn',
+    language: 'zh',
   },
 ];
 
 const I18n = () => {
   const [langLS, setLangLS] = useLocalStorage('lang', 'en');
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     if (langLS === 'en') {
       return;
     }
 
-    i18n.changeLanguage(langLS);
+    setTimeout(() => {
+      i18n.changeLanguage(langLS);
+    });
   }, []);
-
-  const { i18n } = useTranslation();
 
   const setLanguage = (lng: string) => {
     i18n.changeLanguage(lng);

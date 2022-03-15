@@ -2,10 +2,12 @@ import SpiritPopover from '~/components/shared/SpiritPopover';
 import { useLocalStorage } from 'react-use';
 import { appSettings, useSnapshot } from '~/state';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const blocks: ['chart', 'routing', 'exchanges'] = ['chart', 'routing', 'exchanges'];
 
 const AppSettings = () => {
+  const { t } = useTranslation();
   const snap = useSnapshot(appSettings);
 
   const [blocksLS, setBlocksLS] = useLocalStorage(
@@ -51,7 +53,7 @@ const AppSettings = () => {
       <div className="relative flex flex-col w-full p-7 ">
         <div className="collapse border rounded-box border-base-300 collapse-arrow">
           <input type="checkbox" />
-          <div className="collapse-title font-medium">Blocks</div>
+          <div className="collapse-title font-medium">{t('blocks')}</div>
           <div className="collapse-content">
             <div className="flex flex-col">
               {blocks.map((v) => (
@@ -74,10 +76,10 @@ const AppSettings = () => {
         </div>
         <div className="collapse mt-4 border rounded-box border-base-300 collapse-arrow">
           <input type="checkbox" />
-          <div className="collapse-title font-medium">Community</div>
+          <div className="collapse-title font-medium">{t('community')}</div>
           <div className="collapse-content text-sm">
             <p>
-              Learn more about contributions to Yak Spirit on{' '}
+              {t('learnMore')}{' '}
               <a
                 className="link link-primary"
                 href="https://github.com/dragoonzx/yak-spirit"

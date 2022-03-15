@@ -10,12 +10,15 @@ import WalletInfoModal from './WalletInfoModal';
 import { getUserBalances } from '~/utils/getUserBalances';
 import { Link, useLocation } from 'react-router-dom';
 import { AVALANCHE_CHAIN_ID } from '~/utils/constants';
+import { useTranslation } from 'react-i18next';
 
 function Header() {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const isAppPage = location.pathname?.includes('app');
 
-  const { authenticate, isAuthenticated, isAuthenticating, logout, user } = useMoralis();
+  const { authenticate, isAuthenticated, isAuthenticating, user } = useMoralis();
 
   useEffect(() => {
     state.user = user;
@@ -32,14 +35,14 @@ function Header() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  function openModal() {
+  const openModal = () => {
     setIsOpen(true);
-  }
+  };
 
   return (
     <>
       <header>
-        <div className="navbar px-4 mb-2 text-neutral-content rounded-box flex flex-col sm:flex-row">
+        <div className="container-wide mx-auto navbar px-0 sm:px-2 lg:px-0 mb-2 text-neutral-content rounded-box flex flex-col sm:flex-row">
           <div className="flex-1">
             <Link to="/">
               <span className="text-lg font-bold">
@@ -48,17 +51,19 @@ function Header() {
             </Link>
           </div>
           <div>
-            <div className="flex-none lg:flex text-base-content">
-              <div className="flex items-stretch">
-                <div className="mr-1">
+            <div className="flex-none lg:flex text-base-content mt-4 sm:mt-0">
+              <div className="flex items-stretch flex-row-reverse sm:flex-row">
+                {/* <div className="mr-1 hidden sm:block">
                   <Theming />
-                </div>
+                </div> */}
                 <I18n />
                 {isAppPage ? (
                   <button
-                    onClick={isAuthenticated ? openModal : () => authenticate()}
+                    onClick={
+                      isAuthenticated ? openModal : () => authenticate({ signingMessage: 'Connect to Yak Spirit' })
+                    }
                     className={classNames(
-                      'btn btn-sm rounded-btn ml-2 font-sm',
+                      'btn btn-sm rounded-btn sm:ml-2 mr-2 sm:mr-0 font-sm',
                       isAuthenticated ? 'btn-secondary lowercase' : 'btn-ghost'
                     )}
                   >
@@ -95,21 +100,21 @@ function Header() {
                     {isAuthenticated ? formattedEthAddress() : 'Wallet'}
                   </button>
                 ) : (
-                  <Link to="/app" className="btn btn-sm rounded-btn ml-2 font-sm btn-primary">
-                    Launch app
+                  <Link to="/app" className="btn btn-sm rounded-btn sm:ml-2 mr-2 sm:mr-0 font-sm btn-primary">
+                    {t('launchApp')}
                   </Link>
                 )}
               </div>
             </div>
             {isAppPage && (
-              <div className="flex-none ml-2 text-base-content">
+              <div className="flex-none ml-2 mt-4 sm:mt-0 text-base-content">
                 <AppSettings />
               </div>
             )}
           </div>
         </div>
       </header>
-      <WalletInfoModal isOpen={isOpen} setIsOpen={setIsOpen} logout={logout} />
+      <WalletInfoModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 }

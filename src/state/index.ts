@@ -2,6 +2,76 @@ import { proxy, useSnapshot, subscribe } from 'valtio';
 import Moralis from 'moralis';
 import { ADDRESSES } from '~/utils/constants';
 import { IYakOffer, YakTokenType } from '~/types/yak';
+import { tokenList, TokenType } from '~/api/tokenList';
+interface ISyncState {
+  timerKey: number;
+  sync: boolean;
+}
+
+export const syncState: ISyncState = proxy({
+  timerKey: 0,
+  sync: true,
+});
+
+interface ISwapState {
+  tokenIn: TokenType;
+  tokenOut: TokenType;
+  amountIn: number;
+  amountOut: number;
+  loading: boolean;
+  swapLoading: boolean;
+}
+
+export const swapState: ISwapState = proxy({
+  tokenIn: tokenList[0],
+  tokenOut: tokenList.find((v) => v.symbol === 'YAK')!,
+  amountIn: 1,
+  amountOut: 0,
+  loading: true,
+  swapLoading: false,
+});
+
+interface ISwapOfferState {
+  yakOffer?: IYakOffer | null;
+  type: 'Yield Yak' | '1inch' | 'paraswap';
+  externalOffer?: any;
+}
+
+export const swapOfferState: ISwapOfferState = proxy({
+  yakOffer: null,
+  type: 'Yield Yak',
+  externalOffer: null,
+});
+
+interface IUserState {
+  chainId: number;
+  userAddress: string;
+  balances: {
+    native: string;
+    tokens: any[];
+  };
+}
+
+export const userState: IUserState = proxy({
+  chainId: 0,
+  userAddress: '',
+  balances: {
+    native: '0',
+    tokens: [],
+  },
+});
+
+interface ISwapSettings {
+  slippage: number;
+  routers: string[];
+  sync: boolean;
+}
+
+export const swapSettings: ISwapSettings = proxy({
+  slippage: 0.2,
+  routers: ADDRESSES.routers.map((v) => v.platform),
+  sync: true,
+});
 
 interface ISwapInfo {
   tokens: {
@@ -79,16 +149,6 @@ export const appSettings: IAppSettings = proxy({
     routing: true,
     exchanges: true,
   },
-});
-
-interface ISwapSettings {
-  slippage: number;
-  adapters: string[];
-}
-
-export const swapSettings: ISwapSettings = proxy({
-  slippage: 0.2,
-  adapters: ADDRESSES.routers.map((v) => v.platform),
 });
 
 export const useUserBalance = () => {

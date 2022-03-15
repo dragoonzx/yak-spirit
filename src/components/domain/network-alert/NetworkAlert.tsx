@@ -1,119 +1,107 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useMoralis } from 'react-moralis';
 import { useLocation } from 'react-router-dom';
-import Web3 from 'web3';
+import { useChain, useMoralis } from 'react-moralis';
+import { useTranslation } from 'react-i18next';
 
-const AVALANCHE_MAINNET = 43114;
+const AVALANCHE_CHAIN_ID = '0xa86a';
 
 enum ALERT_STATUSES {
   'METAMASK',
   'NETWORK',
 }
 
-const switchNetworkAvalanche = async () => {
-  const web3 = new Web3(window.ethereum);
+// const switchNetworkAvalanche = async () => {
+//   const web3 = new Web3(window.ethereum);
 
-  try {
-    if (!web3?.currentProvider) {
-      return;
-    }
-    // @ts-expect-error: request on string
-    await web3.currentProvider!.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0xa86a' }],
-    });
-  } catch (error: any) {
-    if (error.code === 4902) {
-      try {
-        // @ts-expect-error: request on string
-        await web3.currentProvider!.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: '0xa86a',
-              chainName: 'Avalanche Mainnet',
-              rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-              nativeCurrency: {
-                name: 'AVAX',
-                symbol: 'AVAX',
-                decimals: 18,
-              },
-              blockExplorerUrls: ['https://snowtrace.io/'],
-            },
-          ],
-        });
-      } catch (error: any) {
-        alert(error.message);
-      }
-    }
-  }
-};
+//   try {
+//     if (!web3?.currentProvider) {
+//       return;
+//     }
+//     // @ts-expect-error: request on string
+//     await web3.currentProvider!.request({
+//       method: 'wallet_switchEthereumChain',
+//       params: [{ chainId: '0xa86a' }],
+//     });
+//   } catch (error: any) {
+//     if (error.code === 4902) {
+//       try {
+//         // @ts-expect-error: request on string
+//         await web3.currentProvider!.request({
+//           method: 'wallet_addEthereumChain',
+//           params: [
+//             {
+//               chainId: '0xa86a',
+//               chainName: 'Avalanche Mainnet',
+//               rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+//               nativeCurrency: {
+//                 name: 'AVAX',
+//                 symbol: 'AVAX',
+//                 decimals: 18,
+//               },
+//               blockExplorerUrls: ['https://snowtrace.io/'],
+//             },
+//           ],
+//         });
+//       } catch (error: any) {
+//         alert(error.message);
+//       }
+//     }
+//   }
+// };
 
 export const NetworkAlert = () => {
+  const { t } = useTranslation();
+  const { enableWeb3, isWeb3Enabled, isWeb3EnableLoading } = useMoralis();
+  const { switchNetwork, chainId } = useChain();
+
   const location = useLocation();
   const isAppPage = location.pathname?.includes('app');
-
-  const { Moralis } = useMoralis();
 
   const isMetaMaskInstalled = () => {
     const { ethereum } = window;
     return Boolean(ethereum && ethereum.isMetaMask);
   };
 
-  const [chainId, setChainId] = useState(0);
-
-  const getNetwork = async (): Promise<number | null> => {
-    if (isMetaMaskInstalled()) {
-      const web3 = new Web3(window.ethereum);
-      const chainId = await web3.eth.getChainId();
-      return chainId;
-    }
-
-    return null;
-  };
-
-  useEffect(() => {
-    const initChainWatcher = async () => {
-      const initChainId = await getNetwork();
-      initChainId && setChainId(initChainId);
-
-      // @ts-expect-error: Moralis not typed
-      Moralis.onChainChanged((chainId: string) => {
-        setChainId(Web3.utils.hexToNumber(chainId));
-      });
-    };
-
-    initChainWatcher();
-  }, []);
-
   const [alert, setAlert] = useState<typeof ALERT_STATUSES[keyof typeof ALERT_STATUSES] | null>(null);
 
   useEffect(() => {
-    const checkAlerts = () => {
+    const checkAlerts = async () => {
+      if (!(isWeb3Enabled || isWeb3EnableLoading)) {
+        await enableWeb3();
+      }
+
       switch (true) {
         case !isMetaMaskInstalled():
           setAlert(ALERT_STATUSES.METAMASK);
           break;
-        case chainId && chainId !== AVALANCHE_MAINNET:
+        case !chainId || chainId !== AVALANCHE_CHAIN_ID:
           setAlert(ALERT_STATUSES.NETWORK);
           break;
-        case chainId === AVALANCHE_MAINNET:
+        case chainId === AVALANCHE_CHAIN_ID:
           setAlert(null);
           break;
       }
     };
 
     checkAlerts();
-  }, [chainId]);
+  }, [chainId, isWeb3EnableLoading, isWeb3Enabled]);
 
   const getAlertText = useCallback(() => {
     if (alert !== null) {
       return {
-        [ALERT_STATUSES.METAMASK]: 'You should install MetaMask browser extension and refresh this page',
-        [ALERT_STATUSES.NETWORK]: `App network (Avalanche) doesn't match to network selected in wallet (network with id: ${chainId})`,
+        [ALERT_STATUSES.METAMASK]: t('metamaskWarn'),
+        [ALERT_STATUSES.NETWORK]: t('networkWarn'),
       }[alert];
     }
   }, [alert, chainId]);
+
+  const handleNetworkSwitch = async () => {
+    try {
+      await switchNetwork(AVALANCHE_CHAIN_ID);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (alert === null) {
     return null;
@@ -143,10 +131,10 @@ export const NetworkAlert = () => {
           <label>{getAlertText()}</label>
         </div>
         <div className="flex-none">
-          {alert === ALERT_STATUSES.METAMASK && <a className="btn btn-sm btn-primary">Install MetaMask</a>}
+          {alert === ALERT_STATUSES.METAMASK && <a className="btn btn-sm btn-secondary">{t('install')} MetaMask</a>}
           {alert === ALERT_STATUSES.NETWORK && (
-            <button onClick={switchNetworkAvalanche} className="btn btn-sm btn-primary">
-              Change network
+            <button onClick={() => handleNetworkSwitch()} className="btn btn-sm btn-secondary">
+              {t('changeNetwork')}
             </button>
           )}
         </div>
