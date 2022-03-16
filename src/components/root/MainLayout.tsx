@@ -1,12 +1,10 @@
-import Header from '~/components/domain/header/Header';
 import { NetworkAlert } from '../domain/network-alert/NetworkAlert';
 import Footer from '../domain/footer/Footer';
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
 import Landing from '../screens/Landing';
-// import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import SpiritShine from '~/assets/images/yak-spirit/SpiritShine.png';
+import Header from '../domain/header/Header';
 
 const IndexScreen = lazy(() => import('~/components/screens/Index'));
 

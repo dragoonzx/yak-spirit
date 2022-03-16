@@ -32,5 +32,5 @@ module.exports = merge(commonConfig(), {
     ],
   },
   plugins: [new ReactRefreshWebpackPlugin()].filter(Boolean),
-  devtool: 'cheap-module-source-map',
+  devtool: 'eval-cheap-module-source-map',
 });

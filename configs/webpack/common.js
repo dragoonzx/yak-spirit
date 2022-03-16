@@ -1,6 +1,13 @@
 // shared config (dev and prod)
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const chalk = require('chalk');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+
 const webpack = require('webpack');
 
 module.exports = (prod = false) => {
@@ -18,7 +25,9 @@ module.exports = (prod = false) => {
         assert: require.resolve('assert/'),
         stream: require.resolve('stream-browserify'),
         buffer: require.resolve('buffer'),
+        url: require.resolve('url/'),
       },
+      symlinks: false,
     },
     context: resolve(__dirname, '../../src'),
     module: {
@@ -37,7 +46,7 @@ module.exports = (prod = false) => {
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: [prod ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.(jpe?g|png|gif|svg|mp4)$/i,
@@ -49,6 +58,9 @@ module.exports = (prod = false) => {
       ],
     },
     plugins: [
+      new ProgressBarPlugin({
+        format: `  :msg [:bar] ${chalk.green.bold(':percent')} (:elapsed s)`,
+      }),
       new HtmlWebpackPlugin({ filename: './index.html', template: '../public/index.html' }),
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
@@ -56,6 +68,7 @@ module.exports = (prod = false) => {
       new webpack.ProvidePlugin({
         process: 'process/browser',
       }),
+      new FaviconsWebpackPlugin('../src/assets/images/yak-spirit/yak-favicon.png'),
     ],
     performance: {
       hints: false,

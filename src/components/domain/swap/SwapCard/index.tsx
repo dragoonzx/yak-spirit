@@ -68,7 +68,6 @@ export const SwapCard = (props: SwapProps) => {
     swapOfferState.yakOffer = yakOffer;
 
     yakOffer?.gasEstimate && setGasEstimate(yakOffer.gasEstimate);
-    console.log(yakOffer);
 
     const prices = await getUsdPrices(swapState.tokenIn.address, swapState.tokenOut.address);
     setUsdPrices(prices);

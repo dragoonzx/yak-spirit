@@ -4,12 +4,11 @@ import { useMoralis } from 'react-moralis';
 import { state } from '~/state';
 import yakSpiritLogo from '~/assets/images/yak-spirit/yak-filled-2.png';
 import I18n from '../i18n/I18n';
-import Theming from '../theming/Theming';
+// import Theming from '../theming/Theming';
 import AppSettings from './AppSettings';
 import WalletInfoModal from './WalletInfoModal';
 import { getUserBalances } from '~/utils/getUserBalances';
 import { Link, useLocation } from 'react-router-dom';
-import { AVALANCHE_CHAIN_ID } from '~/utils/constants';
 import { useTranslation } from 'react-i18next';
 
 function Header() {

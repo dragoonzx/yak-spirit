@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import YakTotemSvg from '~/components/domain/YakTotemSvg';
 import { useTranslation } from 'react-i18next';
 import yyImg from '~/assets/images/yield-yak/YYLogo.png';
+// import { lazy } from 'react';
+
+// const LazyYakTotem = lazy(() => import('~/components/domain/YakTotemSvg'));
 
 function Landing() {
   const { t } = useTranslation();
